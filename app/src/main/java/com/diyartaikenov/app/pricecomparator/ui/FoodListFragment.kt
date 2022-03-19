@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
+import com.diyartaikenov.app.pricecomparator.databinding.FragmentFoodListBinding
 
-class ProductListFragment: Fragment() {
+class FoodListFragment: Fragment() {
 
-    private var _bind: FragmentProductListBinding? = null
+    private var _bind: FragmentFoodListBinding? = null
     private val bind get() = _bind!!
 
     override fun onCreateView(
@@ -18,7 +18,7 @@ class ProductListFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _bind = FragmentProductListBinding.inflate(inflater, container, false)
+        _bind = FragmentFoodListBinding.inflate(inflater, container, false)
         return bind.root
     }
 
