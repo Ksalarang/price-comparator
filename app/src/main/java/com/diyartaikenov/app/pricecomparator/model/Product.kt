@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 
-@Entity(tableName = "food")
+@Entity(tableName = "products")
 @TypeConverters(FoodGroupConverter::class)
-data class Food(
+data class Product(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val name: String,
