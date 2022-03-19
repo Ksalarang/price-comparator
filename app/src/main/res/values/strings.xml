@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Price Comparator</string>
+    <string name="product_weight">%d g</string>
+    <string name="product_price">%d tg</string>
+    <string name="description_button_options">Options button</string>
+</resources>
