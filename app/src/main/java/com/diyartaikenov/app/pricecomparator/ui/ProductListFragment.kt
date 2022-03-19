@@ -1,4 +1,4 @@
-package com.diyartaikenov.app.pricecomparator
+package com.diyartaikenov.app.pricecomparator.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
