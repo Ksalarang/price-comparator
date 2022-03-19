@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp">
+    android:padding="@dimen/padding">
 
+    <!-- First row -->
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:textSize="24sp"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Product 1"
-        />
+        tools:text="Творог Родина" />
 
     <ImageView
         android:id="@+id/button_options"
@@ -23,11 +24,11 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_button_options"
         android:src="@drawable/ic_options"
-        app:tint="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
+    <!-- Second row -->
     <TextView
         android:id="@+id/weight"
         style="@style/ItemLayout.Small.TextView"
@@ -36,18 +37,84 @@
         android:text="@string/product_weight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="200 g"
-        />
+        tools:text="Per 200 g:" />
 
     <TextView
         android:id="@+id/price"
         style="@style/ItemLayout.Small.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="@dimen/margin_start"
         android:text="@string/product_price"
         app:layout_constraintStart_toEndOf="@id/weight"
         app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="550 tg"
-        />
+        tools:text="500 tg" />
+
+    <TextView
+        android:id="@+id/protein_quantity"
+        style="@style/ItemLayout.Small.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start"
+        android:text="@string/protein_quantity"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toEndOf="@id/price"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        tools:text="36 g" />
+
+    <!-- Third row -->
+    <TextView
+        android:id="@+id/weight_label_100g"
+        style="@style/ItemLayout.Small.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weight_label_100g"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weight"
+        tools:text="Per 100 g:" />
+
+    <TextView
+        android:id="@+id/price_per_100g"
+        style="@style/ItemLayout.Small.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start"
+        android:text="@string/product_price"
+        android:textColor="@color/green"
+        app:layout_constraintStart_toEndOf="@id/weight_label_100g"
+        app:layout_constraintTop_toBottomOf="@id/weight"
+        tools:text="250 tg" />
+
+    <TextView
+        android:id="@+id/protein_quantity_per_100g"
+        style="@style/ItemLayout.Small.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start"
+        android:text="@string/protein_quantity"
+        app:layout_constraintStart_toEndOf="@id/price_per_100g"
+        app:layout_constraintTop_toBottomOf="@id/weight"
+        tools:text="18 g" />
+
+    <TextView
+        android:id="@+id/label_protein_price_per_gram"
+        style="@style/ItemLayout.Small.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_start"
+        android:text="@string/label_protein_price_per_gram"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/protein_price_per_gram"
+        tools:text="@string/label_protein_price_per_gram" />
+
+    <TextView
+        android:id="@+id/protein_price_per_gram"
+        style="@style/ItemLayout.Small.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/protein_price_per_gram"
+        android:textColor="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weight"
+        tools:text="13.88 tg" />
 </androidx.constraintlayout.widget.ConstraintLayout>
