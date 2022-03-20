@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Product list fragment -->
     <dimen name="margin_start">8dp</dimen>
     <dimen name="margin_start_big">20dp</dimen>
-    <dimen name="padding">4dp</dimen>
+    <dimen name="padding_product_list">4dp</dimen>
+
+    <!-- Add product fragment -->
+    <dimen name="padding_add_product">12dp</dimen>
+    <dimen name="text_size_add_product">18sp</dimen>
+    <dimen name="margin_fab">24dp</dimen>
 </resources>

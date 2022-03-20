@@ -4,9 +4,29 @@
     <!-- Product item layout -->
     <string name="description_button_options">Options button</string>
     <string name="product_weight">Per %d g:</string>
-    <string name="weight_label_100g">Per 100 g:</string>
     <string name="product_price">%d tg</string>
+    <string name="protein_quantity">%d g</string>
+    <string name="weight_label_100g">Per 100 g:</string>
     <string name="label_protein_price_per_gram">Protein price/g:</string>
     <string name="protein_price_per_gram">%f tg</string>
-    <string name="protein_quantity">%d g</string>
+
+    <!-- Add product fragment -->
+    <string name="label_add_product">Add Product</string>
+    <string name="hint_product_name">Name</string>
+    <string name="label_weight">Weight (g):</string>
+    <string name="hint_weight_200">200</string>
+    <string name="label_price">Price:</string>
+    <string name="hint_price_500">500</string>
+    <string name="label_protein_quantity">Proteins per 100g (g):</string>
+    <string name="hint_protein_18">18</string>
+    <string name="description_button_add_product">Add product button</string>
+
+    <string-array name="food_groups">
+        <item>Undefined</item>
+        <item>Animal products</item>
+        <item>Diary</item>
+        <item>Flavor products</item>
+        <item>Fruit and vegetables</item>
+        <item>Grain products</item>
+    </string-array>
 </resources>

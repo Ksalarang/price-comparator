@@ -16,6 +16,11 @@
 
     <style name="ItemLayout.Small.TextView" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">14sp</item>
-        <item name="android:padding">@dimen/padding</item>
+        <item name="android:padding">@dimen/padding_product_list</item>
+    </style>
+
+    <style name="AddProductFragment.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/text_size_add_product</item>
+        <item name="android:padding">4dp</item>
     </style>
 </resources>

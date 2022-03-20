@@ -20,10 +20,10 @@ data class Product(
 )
 
 enum class FoodGroup {
+    UNDEFINED,
     ANIMAL_PRODUCTS,
     DIARY,
     FLAVOR_PRODUCTS,
     FRUIT_AND_VEGETABLES,
     GRAIN_PRODUCTS,
-    UNDEFINED
 }
