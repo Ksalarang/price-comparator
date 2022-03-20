@@ -1,4 +1,4 @@
-package com.diyartaikenov.app.pricecomparator.ui
+package com.diyartaikenov.app.pricecomparator.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

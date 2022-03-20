@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
+import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
+import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
 
 class ProductListFragment: Fragment() {
 
