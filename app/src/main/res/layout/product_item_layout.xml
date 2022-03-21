@@ -60,12 +60,12 @@
             tools:text="500 tg" />
 
         <TextView
-            android:id="@+id/protein_quantity"
+            android:id="@+id/protein_quantity_per_product"
             style="@style/ItemLayout.Small.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
-            android:text="@string/protein_quantity"
+            android:text="@{@string/protein_quantity(product.totalProteinQuantity)}"
             android:textColor="@color/blue"
             app:layout_constraintStart_toEndOf="@id/price"
             app:layout_constraintTop_toBottomOf="@id/name"
@@ -80,7 +80,7 @@
             android:text="@string/weight_label_100g"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weight"
-            tools:text="Per 100 g:" />
+            tools:text="@string/weight_label_100g" />
 
         <TextView
             android:id="@+id/price_per_100g"
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
-            android:text="@string/product_price"
+            android:text="@{@string/product_price(product.relativePrice)}"
             android:textColor="@color/green"
             app:layout_constraintStart_toEndOf="@id/weight_label_100g"
             app:layout_constraintTop_toBottomOf="@id/weight"
@@ -121,7 +121,7 @@
             style="@style/ItemLayout.Small.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/protein_price_per_gram"
+            android:text="@{@string/protein_price_per_gram(product.proteinPrice)}"
             android:textColor="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weight"

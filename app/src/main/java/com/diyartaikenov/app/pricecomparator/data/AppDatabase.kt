@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 import com.diyartaikenov.app.pricecomparator.model.Product
 
-@Database(version = 1, entities = [Product::class], exportSchema = false)
+@Database(version = 2, entities = [Product::class], exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun getProductDao(): ProductDao

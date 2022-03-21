@@ -16,7 +16,13 @@ data class Product(
     @ColumnInfo(name = "protein_quantity")
     val proteinQuantity: Int,
     @ColumnInfo(name = "food_group")
-    val foodGroup: FoodGroup
+    val foodGroup: FoodGroup,
+    @ColumnInfo(name = "total_protein_quantity")
+    val totalProteinQuantity: Int,
+    @ColumnInfo(name = "relative_price")
+    val relativePrice: Int,
+    @ColumnInfo(name = "protein_price")
+    val proteinPrice: Double,
 )
 
 enum class FoodGroup {

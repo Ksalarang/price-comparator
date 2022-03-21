@@ -18,8 +18,11 @@
     <string name="label_price">Price:</string>
     <string name="hint_price_500">500</string>
     <string name="label_protein_quantity">Proteins per 100g (g):</string>
-    <string name="hint_protein_18">18</string>
     <string name="description_button_add_product">Add product button</string>
+    <string name="label_food_group">Food group:</string>
+    <string name="description_button_save_product">Save product button</string>
+    <string name="name_input_layout_error">This field cannot be empty</string>
+    <string name="zero" translatable="false">0</string>
 
     <string-array name="food_groups">
         <item>Undefined</item>

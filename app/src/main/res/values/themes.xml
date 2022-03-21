@@ -23,4 +23,12 @@
         <item name="android:textSize">@dimen/text_size_add_product</item>
         <item name="android:padding">4dp</item>
     </style>
+
+    <style name="AddProductFragment.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">@dimen/text_size_add_product</item>
+        <item name="android:padding">4dp</item>
+        <item name="maxLines">1</item>
+        <item name="android:maxLength">7</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
 </resources>

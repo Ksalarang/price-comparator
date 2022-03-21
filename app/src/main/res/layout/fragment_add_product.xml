@@ -19,10 +19,11 @@
         app:layout_constraintTop_toTopOf="parent">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInputEditText"
+            android:inputType="text"
             android:textSize="@dimen/text_size_add_product"
+            android:maxLines="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1" />
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Weight -->
@@ -37,14 +38,12 @@
         tools:text="@string/label_weight" />
     <EditText
         android:id="@+id/weight"
-        style="@style/AddProductFragment.TextView"
+        style="@style/AddProductFragment.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/hint_weight_200"
+        android:text="@string/zero"
         android:inputType="number"
         android:importantForAutofill="no"
-        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout" />
 
@@ -60,14 +59,12 @@
         tools:text="@string/label_price" />
     <EditText
         android:id="@+id/price"
-        style="@style/AddProductFragment.TextView"
+        style="@style/AddProductFragment.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/hint_price_500"
+        android:text="@string/zero"
         android:inputType="number"
         android:importantForAutofill="no"
-        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_weight" />
 
@@ -83,22 +80,48 @@
         tools:text="@string/label_protein_quantity" />
     <EditText
         android:id="@+id/protein_quantity"
-        style="@style/AddProductFragment.TextView"
+        style="@style/AddProductFragment.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:hint="@string/hint_protein_18"
+        android:text="@string/zero"
         android:inputType="number"
+        android:maxLength="2"
         android:importantForAutofill="no"
-        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_price" />
 
     <!-- Food group -->
+    <TextView
+        android:id="@+id/label_food_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_food_group"
+        android:textSize="@dimen/text_size_add_product"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_protein_quantity"
+        tools:text="@string/label_food_group" />
+
     <Spinner
         android:id="@+id/food_group_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_protein_quantity" />
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/protein_quantity" />
+
+    <!-- Save product fab -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSaveProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:src="@drawable/ic_done"
+        android:contentDescription="@string/description_button_save_product"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
