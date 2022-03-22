@@ -8,7 +8,7 @@
     <string name="protein_quantity">%d g</string>
     <string name="weight_label_100g">Per 100 g:</string>
     <string name="label_protein_price_per_gram">Protein price/g:</string>
-    <string name="protein_price_per_gram">%f tg</string>
+    <string name="protein_price_per_gram">%.2f tg</string>
 
     <!-- Add product fragment -->
     <string name="label_add_product">Add Product</string>
