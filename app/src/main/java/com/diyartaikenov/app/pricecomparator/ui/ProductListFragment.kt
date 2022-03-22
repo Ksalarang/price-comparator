@@ -37,11 +37,18 @@ class ProductListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ProductListAdapter { product ->
-            findNavController().navigate(
-                ProductListFragmentDirections.actionNavProductsToNavAddProduct(product.id)
-            )
-        }
+        val adapter = ProductListAdapter(
+            requireContext(),
+            { product ->
+                findNavController().navigate(
+                    ProductListFragmentDirections.actionNavProductsToNavAddProduct(product.id)
+                )
+            },
+            { product ->
+                viewModel.deleteProduct(product)
+            }
+        )
+
         viewModel.products.observe(viewLifecycleOwner) { products ->
             adapter.submitList(products)
         }
