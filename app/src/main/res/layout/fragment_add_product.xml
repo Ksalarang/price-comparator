@@ -11,6 +11,7 @@
     <!-- Name -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameInputLayout"
+        style="@style/AddProductFragment.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_product_name"
@@ -23,7 +24,7 @@
             android:textSize="@dimen/text_size_add_product"
             android:maxLines="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Weight -->
@@ -33,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_weight"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout"
         tools:text="@string/label_weight" />
@@ -41,11 +43,28 @@
         style="@style/AddProductFragment.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:text="@string/zero"
         android:inputType="number"
         android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/weightInputLayout"
+        style="@style/AddProductFragment.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_product_weight"
+        app:errorEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/weightInputEditText"
+            style="@style/AddProductFragment.InputEditText.Number"
+            android:maxLength="5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Price -->
     <TextView
@@ -54,6 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_price"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_weight"
         tools:text="@string/label_price" />
@@ -63,10 +83,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero"
+        android:visibility="invisible"
         android:inputType="number"
         android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_weight" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/priceInputLayout"
+        style="@style/AddProductFragment.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_product_price"
+        app:errorEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weightInputLayout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/priceInputEditText"
+            style="@style/AddProductFragment.InputEditText.Number"
+            android:maxLength="7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Protein quantity -->
     <TextView
@@ -75,6 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_protein_quantity"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_price"
         tools:text="@string/label_protein_quantity" />
@@ -84,11 +122,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero"
+        android:visibility="invisible"
         android:inputType="number"
         android:maxLength="2"
         android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_price" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/proteinQuantityInputLayout"
+        style="@style/AddProductFragment.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_product_protein_quantity"
+        app:errorEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priceInputLayout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/proteinQuantityInputEditText"
+            style="@style/AddProductFragment.InputEditText.Number"
+            android:text="@string/zero"
+            android:maxLength="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Food group -->
     <TextView
@@ -102,7 +158,7 @@
         android:paddingBottom="4dp"
         android:paddingTop="13dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_protein_quantity"
+        app:layout_constraintTop_toBottomOf="@id/proteinQuantityInputLayout"
         tools:text="@string/label_food_group" />
 
     <Spinner
@@ -111,7 +167,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/protein_quantity" />
+        app:layout_constraintTop_toBottomOf="@id/proteinQuantityInputLayout" />
 
     <!-- Save product fab -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

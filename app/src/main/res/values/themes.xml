@@ -31,4 +31,18 @@
         <item name="android:maxLength">7</item>
         <item name="android:selectAllOnFocus">true</item>
     </style>
+
+    <style name="AddProductFragment.TextInputLayout"
+            parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_margin">12dp</item>
+    </style>
+
+    <style name="AddProductFragment.InputEditText.Number"
+            parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:inputType">number</item>
+        <item name="android:textSize">@dimen/text_size_add_product</item>
+        <item name="maxLines">1</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
 </resources>
