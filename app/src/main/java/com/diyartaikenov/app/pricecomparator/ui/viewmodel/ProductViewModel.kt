@@ -11,29 +11,19 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     val products:LiveData<List<Product>> = productDao.getProducts().asLiveData()
 
-    fun addProduct(
-        name: String,
-        weight: Int,
-        price: Int,
-        proteinQuantity: Int,
-        foodGroup: FoodGroup,
-        totalProteinQuantity: Int,
-        relativePrice: Int,
-        proteinPrice: Double
-    ) {
-        val product = Product(
-            name = name,
-            weight = weight,
-            price = price,
-            proteinQuantity = proteinQuantity,
-            foodGroup = foodGroup,
-            totalProteinQuantity = totalProteinQuantity,
-            relativePrice = relativePrice,
-            proteinPrice = proteinPrice
-        )
+    fun getProductById(id: Long): LiveData<Product> {
+        return productDao.getProduct(id).asLiveData()
+    }
 
+    fun addProduct(product: Product) {
         viewModelScope.launch {
             productDao.insert(product)
+        }
+    }
+
+    fun updateProduct(product: Product) {
+        viewModelScope.launch {
+            productDao.update(product)
         }
     }
 

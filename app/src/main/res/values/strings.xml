@@ -21,13 +21,15 @@
     <string name="description_button_add_product">Add product button</string>
     <string name="label_food_group">Food group:</string>
     <string name="description_button_save_product">Save product button</string>
-    <string name="name_input_layout_error">This field cannot be empty</string>
     <string name="zero" translatable="false">0</string>
     <string name="menu_item_edit">Edit</string>
     <string name="menu_item_delete">Delete</string>
     <string name="hint_product_weight">Weight (g)</string>
     <string name="hint_product_price">Price</string>
     <string name="hint_product_protein_quantity">Protein (g)</string>
+    <string name="name_input_layout_error">This field cannot be empty</string>
+    <string name="weight_input_layout_error">Weight must be at least 10 g</string>
+    <string name="price_input_layout_error">Price must be at least 10 tg</string>
 
     <string-array name="food_groups">
         <item>Undefined</item>
