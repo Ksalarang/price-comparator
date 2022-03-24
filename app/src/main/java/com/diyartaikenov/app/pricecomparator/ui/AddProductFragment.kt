@@ -18,6 +18,9 @@ import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
+import com.diyartaikenov.app.pricecomparator.utils.getIntValue
+import com.diyartaikenov.app.pricecomparator.utils.hideSoftInput
+import com.diyartaikenov.app.pricecomparator.utils.showSoftInput
 import kotlin.math.roundToInt
 
 class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
@@ -34,9 +37,9 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private val bind get() = _bind!!
 
     private val name get() = bind.nameInputEditText.text.toString()
-    private val weight get() = bind.weightInputEditText.text.toString().toInt()
-    private val price get() = bind.priceInputEditText.text.toString().toInt()
-    private val proteinQuantity get() = bind.proteinQuantityInputEditText.text.toString().toInt()
+    private val weight get() = bind.weightInputEditText.getIntValue()
+    private val price get() = bind.priceInputEditText.getIntValue()
+    private val proteinQuantity get() = bind.proteinQuantityInputEditText.getIntValue()
     private var foodGroup = FoodGroup.UNDEFINED
 
     override fun onCreateView(
@@ -63,9 +66,13 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
                 }
             }
         } else { // Add a new product
+            bind.nameInputEditText.requestFocus()
+            activity?.showSoftInput(bind.nameInputEditText)
+
             bind.fabSaveProduct.setOnClickListener {
                 if (validateFields()) {
                     viewModel.addProduct(buildProductInstance())
+                    activity?.hideSoftInput(bind.nameInputEditText)
                     findNavController().navigate(R.id.action_nav_add_product_to_nav_products)
                 }
             }
@@ -122,10 +129,10 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
      * Only call after validateFields() returns true.
      */
     private fun buildProductInstance(): Product {
-        val totalProteinQuantity: Int = (proteinQuantity * (weight / 100.0)).roundToInt()
-        val relativePrice: Int = (price / (weight / 100.0)).roundToInt()
+        val totalProteinQuantity = (proteinQuantity * (weight / 100.0)).roundToInt()
+        val relativePrice = (price / (weight / 100.0)).roundToInt()
 
-        val proteinPrice: Double = if (totalProteinQuantity == 0) {
+        val proteinPrice = if (totalProteinQuantity == 0) {
             0.0
         } else {
             price / totalProteinQuantity.toDouble()
@@ -145,22 +152,34 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun validateFields(): Boolean {
-        return if (areFieldsCorrect()) {
-            bind.apply {
-                nameInputLayout.error = null
-                weightInputLayout.error = null
-                priceInputLayout.error = null
-            }
-            true
+        val isNameValid: Boolean
+        val isWeightValid: Boolean
+        val isPriceValid: Boolean
+
+        if (name.isNotBlank()) {
+            bind.nameInputLayout.error = null
+            isNameValid = true
         } else {
             bind.nameInputLayout.error = getString(R.string.name_input_layout_error)
-            bind.weightInputLayout.error = getString(R.string.weight_input_layout_error)
-            bind.priceInputLayout.error = getString(R.string.price_input_layout_error)
-            false
+            isNameValid = false
         }
-    }
 
-    private fun areFieldsCorrect(): Boolean {
-        return name.isNotBlank() && weight > 9 && price > 9
+        if (weight > 9) {
+            bind.weightInputLayout.error = null
+            isWeightValid = true
+        } else {
+            bind.weightInputLayout.error = getString(R.string.weight_input_layout_error)
+            isWeightValid = false
+        }
+
+        if (price > 9) {
+            bind.priceInputLayout.error = null
+            isPriceValid = true
+        } else {
+            bind.priceInputLayout.error = getString(R.string.price_input_layout_error)
+            isPriceValid = false
+        }
+
+        return isNameValid && isWeightValid && isPriceValid
     }
 }

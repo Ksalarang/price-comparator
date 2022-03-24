@@ -27,7 +27,7 @@
     <string name="hint_product_weight">Weight (g)</string>
     <string name="hint_product_price">Price</string>
     <string name="hint_product_protein_quantity">Protein (g)</string>
-    <string name="name_input_layout_error">This field cannot be empty</string>
+    <string name="name_input_layout_error">Name cannot be empty</string>
     <string name="weight_input_layout_error">Weight must be at least 10 g</string>
     <string name="price_input_layout_error">Price must be at least 10 tg</string>
 
