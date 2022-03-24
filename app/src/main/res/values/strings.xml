@@ -31,6 +31,8 @@
     <string name="name_input_layout_error">Name cannot be empty</string>
     <string name="weight_input_layout_error">Weight must be at least 10 g</string>
     <string name="price_input_layout_error">Price must be at least 10 tg</string>
+    <string name="action_sort_by_protein_price">Sort by protein price</string>
+    <string name="action_sort_by_protein_quantity">Sort by protein quantity</string>
 
     <string-array name="food_groups">
         <item>Undefined</item>
