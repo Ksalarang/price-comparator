@@ -58,14 +58,14 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
 
             bind.fabSaveProduct.setOnClickListener {
                 if (validateFields()) {
-                    viewModel.updateProduct(makeProduct())
+                    viewModel.updateProduct(buildProductInstance())
                     findNavController().navigate(R.id.action_nav_add_product_to_nav_products)
                 }
             }
         } else { // Add a new product
             bind.fabSaveProduct.setOnClickListener {
                 if (validateFields()) {
-                    viewModel.addProduct(makeProduct())
+                    viewModel.addProduct(buildProductInstance())
                     findNavController().navigate(R.id.action_nav_add_product_to_nav_products)
                 }
             }
@@ -83,7 +83,6 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
         foodGroup = when(position) {
             FoodGroup.ANIMAL_PRODUCTS.ordinal -> FoodGroup.ANIMAL_PRODUCTS
             FoodGroup.DIARY.ordinal -> FoodGroup.DIARY
@@ -122,7 +121,7 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
      * Create a [Product] instance from the input fields.
      * Only call after validateFields() returns true.
      */
-    private fun makeProduct(): Product {
+    private fun buildProductInstance(): Product {
         val totalProteinQuantity: Int = (proteinQuantity * (weight / 100.0)).roundToInt()
         val relativePrice: Int = (price / (weight / 100.0)).roundToInt()
 
@@ -133,6 +132,7 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         return Product(
+            id = navArgs.id,
             name = name,
             weight = weight,
             price = price,

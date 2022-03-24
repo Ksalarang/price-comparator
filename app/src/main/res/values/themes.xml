@@ -37,7 +37,7 @@
         <item name="android:layout_margin">12dp</item>
     </style>
 
-    <style name="AddProductFragment.InputEditText.Number"
+    <style name="AddProductFragment.NumberInputEditText"
             parent="ThemeOverlay.Material3.TextInputEditText">
         <item name="android:inputType">number</item>
         <item name="android:textSize">@dimen/text_size_add_product</item>
