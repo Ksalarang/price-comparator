@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.diyartaikenov.app.pricecomparator.BaseApplication
+import com.diyartaikenov.app.pricecomparator.MainActivity
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentAddProductBinding
 import com.diyartaikenov.app.pricecomparator.model.FoodGroup
@@ -54,7 +55,10 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (navArgs.id > 0) { // Update the existing product
+        if (navArgs.id > 0) { // Edit the existing product
+            (activity as? MainActivity)
+                ?.supportActionBar?.title = getString(R.string.label_edit_product)
+
             viewModel.getProductById(navArgs.id).observe(viewLifecycleOwner) { product ->
                 bindProduct(product)
             }

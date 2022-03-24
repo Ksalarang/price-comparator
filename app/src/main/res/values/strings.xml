@@ -12,6 +12,7 @@
 
     <!-- Add product fragment -->
     <string name="label_add_product">Add Product</string>
+    <string name="label_edit_product">Edit Product</string>
     <string name="hint_product_name">Name</string>
     <string name="label_weight">Weight (g):</string>
     <string name="hint_weight_200">200</string>
