@@ -13,17 +13,22 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_product_list">
+        android:padding="8dp"
+        android:layout_margin="4dp"
+        android:background="@color/white"
+        android:elevation="4dp">
 
         <!-- First row -->
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:text="@{product.name}"
             android:textSize="22sp"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_options"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Творог Родина" />
 
@@ -33,6 +38,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/description_button_options"
             android:src="@drawable/ic_options"
+            android:background="@drawable/ripple_effect"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"

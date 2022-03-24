@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInputEditText"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:textSize="@dimen/text_size_add_product"
             android:maxLines="1"
             android:layout_width="match_parent"
