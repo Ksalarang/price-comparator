@@ -58,7 +58,21 @@ class ProductListAdapter(
             binding.apply {
                 this.product = product
                 buttonOptions.setOnClickListener(menuButtonClickListener)
+                if (product.proteinQuantity > 0) {
+                    setProteinViewsVisibility(View.VISIBLE)
+                } else {
+                    setProteinViewsVisibility(View.INVISIBLE)
+                }
                 executePendingBindings()
+            }
+        }
+
+        private fun setProteinViewsVisibility(visibility: Int) {
+            binding.apply {
+                proteinQuantityPerProduct.visibility = visibility
+                proteinQuantityPer100g.visibility = visibility
+                labelProteinPricePerGram.visibility = visibility
+                proteinPricePerGram.visibility = visibility
             }
         }
     }
