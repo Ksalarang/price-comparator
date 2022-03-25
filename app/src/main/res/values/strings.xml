@@ -33,6 +33,7 @@
     <string name="price_input_layout_error">Price must be at least 10 tg</string>
     <string name="action_sort_by_protein_price">Sort by protein price</string>
     <string name="action_sort_by_protein_quantity">Sort by protein quantity</string>
+    <string name="action_sort_by_default">Sort by default</string>
 
     <string-array name="food_groups">
         <item>Undefined</item>

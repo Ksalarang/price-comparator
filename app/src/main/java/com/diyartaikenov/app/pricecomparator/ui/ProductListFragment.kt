@@ -9,10 +9,11 @@ import androidx.navigation.fragment.findNavController
 import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
-import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
+import com.diyartaikenov.app.pricecomparator.utils.SortOrder
+import com.diyartaikenov.app.pricecomparator.utils.log
 
 class ProductListFragment: Fragment() {
 
@@ -25,7 +26,7 @@ class ProductListFragment: Fragment() {
     private var _bind: FragmentProductListBinding? = null
     private val bind get() = _bind!!
 
-    private lateinit var products: List<Product>
+    private lateinit var adapter: ProductListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,26 +41,14 @@ class ProductListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ProductListAdapter(
-            requireContext(),
-            { product ->
-                findNavController().navigate(
-                    ProductListFragmentDirections.actionNavProductsToNavAddProduct(product.id)
-                )
-            },
-            { product ->
-                viewModel.deleteProduct(product)
-            }
-        )
+        adapter = createAdapter()
 
         viewModel.products.observe(viewLifecycleOwner) { products ->
             adapter.submitList(products)
-            this.products = products
         }
+        bind.recyclerView.adapter = adapter
 
         bind.apply {
-            recyclerView.adapter = adapter
-
             fabAddProduct.setOnClickListener {
                 findNavController().navigate(
                     ProductListFragmentDirections.actionNavProductsToNavAddProduct()
@@ -80,21 +69,43 @@ class ProductListFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.sort_by_default -> {
+                viewModel.sortInOrder(SortOrder.DEFAULT)
+                viewModel.products.observe(viewLifecycleOwner) { products ->
+                    adapter.submitList(products)
+                }
+                bind.recyclerView.adapter = adapter
+            }
             R.id.sort_by_protein_price -> {
-                bind.recyclerView.adapter
+                viewModel.sortInOrder(SortOrder.BY_PROTEIN_PRICE)
+                viewModel.products.observe(viewLifecycleOwner) { products ->
+                    adapter.submitList(products)
+                }
+                bind.recyclerView.adapter = adapter
             }
             R.id.sort_by_protein_quantity -> {
-
+                viewModel.sortInOrder(SortOrder.BY_PROTEIN_QUANTITY)
+                viewModel.products.observe(viewLifecycleOwner) { products ->
+                    adapter.submitList(products)
+                }
+                bind.recyclerView.adapter = adapter
             }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun List<Product>.sortByProteinPrice(): List<Product> {
-        val mutableList = this.toMutableList()
-        mutableList.sortWith(compareBy { it.proteinPrice })
-
-        return mutableList.toList()
+    private fun createAdapter(): ProductListAdapter {
+        return ProductListAdapter(
+            requireContext(),
+            { product -> // Edit the product
+                findNavController().navigate(
+                    ProductListFragmentDirections.actionNavProductsToNavAddProduct(product.id)
+                )
+            },
+            { product -> // Remove the product
+                viewModel.deleteProduct(product)
+            }
+        )
     }
 }

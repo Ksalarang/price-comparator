@@ -2,6 +2,7 @@ package com.diyartaikenov.app.pricecomparator.utils
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -23,4 +24,12 @@ fun EditText.getIntValue(): Int {
     } catch (e: NumberFormatException) {
         0
     }
+}
+
+fun log(message: String) {
+    Log.d("mytag", message)
+}
+
+enum class SortOrder {
+    DEFAULT, BY_PROTEIN_PRICE, BY_PROTEIN_QUANTITY,
 }

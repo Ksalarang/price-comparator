@@ -3,13 +3,16 @@ package com.diyartaikenov.app.pricecomparator.ui.viewmodel
 import androidx.lifecycle.*
 
 import com.diyartaikenov.app.pricecomparator.data.ProductDao
-import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product
+import com.diyartaikenov.app.pricecomparator.utils.SortOrder
 import kotlinx.coroutines.launch
 
 class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
-    val products:LiveData<List<Product>> = productDao.getProducts().asLiveData()
+    private var sortOrder = SortOrder.DEFAULT
+
+    var products: LiveData<List<Product>> = getProductsSorted()
+        private set
 
     fun getProductById(id: Long): LiveData<Product> {
         return productDao.getProduct(id).asLiveData()
@@ -30,6 +33,23 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
     fun deleteProduct(product: Product) {
         viewModelScope.launch {
             productDao.delete(product)
+        }
+    }
+
+    fun sortInOrder(sortOrder: SortOrder) {
+        this.sortOrder = sortOrder
+        products = getProductsSorted()
+    }
+
+    private fun getProductsSorted(): LiveData<List<Product>> {
+        return when(sortOrder) {
+            SortOrder.DEFAULT ->
+                productDao.getProducts().asLiveData()
+            SortOrder.BY_PROTEIN_PRICE -> {
+                productDao.getProductsSortedByProteinPrice().asLiveData()
+            }
+            SortOrder.BY_PROTEIN_QUANTITY ->
+                productDao.getProductsSortedByProteinQuantity().asLiveData()
         }
     }
 }
