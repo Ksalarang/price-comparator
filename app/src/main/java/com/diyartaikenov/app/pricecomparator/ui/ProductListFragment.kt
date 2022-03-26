@@ -2,20 +2,20 @@ package com.diyartaikenov.app.pricecomparator.ui
 
 import android.os.Bundle
 import android.view.*
-import androidx.constraintlayout.widget.Group
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 
 import com.diyartaikenov.app.pricecomparator.BaseApplication
-import com.diyartaikenov.app.pricecomparator.MainActivity
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
+import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
 import com.diyartaikenov.app.pricecomparator.utils.SortOrder
+import com.diyartaikenov.app.pricecomparator.utils.getIntPreference
+import com.diyartaikenov.app.pricecomparator.utils.saveIntPreference
 
 class ProductListFragment: Fragment() {
 
@@ -29,11 +29,7 @@ class ProductListFragment: Fragment() {
     private val bind get() = _bind!!
 
     private lateinit var adapter: ProductListAdapter
-
-    // Options menu sort action items
-    private lateinit var sortByDefaultMenuItem: MenuItem
-    private lateinit var sortByProteinPriceMenuItem: MenuItem
-    private lateinit var sortByProteinQuantityMenuItem: MenuItem
+    private lateinit var sortActionMenuItems: List<MenuItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,11 +46,6 @@ class ProductListFragment: Fragment() {
 
         adapter = createAdapter()
 
-        viewModel.products.observe(viewLifecycleOwner) { products ->
-            adapter.submitList(products)
-        }
-        bind.recyclerView.adapter = adapter
-
         bind.apply {
             fabAddProduct.setOnClickListener {
                 findNavController().navigate(
@@ -65,6 +56,11 @@ class ProductListFragment: Fragment() {
     }
 
     override fun onDestroyView() {
+        saveIntPreference(
+            requireActivity(),
+            PREF_SORT_ORDER_ORDINAL,
+            viewModel.sortOrder.ordinal
+        )
         _bind = null
         super.onDestroyView()
     }
@@ -72,36 +68,38 @@ class ProductListFragment: Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_buttons_menu, menu)
 
-        sortByDefaultMenuItem = menu.findItem(R.id.sort_by_default)
-        sortByProteinPriceMenuItem = menu.findItem(R.id.sort_by_protein_price)
-        sortByProteinQuantityMenuItem = menu.findItem(R.id.sort_by_protein_quantity)
-
-        super.onCreateOptionsMenu(menu, inflater)
+        sortActionMenuItems = listOf(
+            menu.findItem(R.id.sort_by_default),
+            menu.findItem(R.id.sort_by_protein_price),
+            menu.findItem(R.id.sort_by_protein_quantity)
+        )
+        val menuItemIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
+        onOptionsItemSelected(sortActionMenuItems[menuItemIndex])
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by_default -> {
-                sortByDefaultMenuItem.isChecked = true
+                sortActionMenuItems[0].isChecked = true
                 viewModel.sortInOrder(SortOrder.DEFAULT)
             }
             R.id.sort_by_protein_price -> {
-                sortByProteinPriceMenuItem.isChecked = true
+                sortActionMenuItems[1].isChecked = true
                 viewModel.sortInOrder(SortOrder.BY_PROTEIN_PRICE)
             }
             R.id.sort_by_protein_quantity -> {
-                sortByProteinQuantityMenuItem.isChecked = true
+                sortActionMenuItems[2].isChecked = true
                 viewModel.sortInOrder(SortOrder.BY_PROTEIN_QUANTITY)
             }
         }
 
-        //
+        // Observe changes and apply them to the recyclerView adapter
         viewModel.products.observe(viewLifecycleOwner) { products ->
             adapter.submitList(products)
         }
         bind.recyclerView.adapter = adapter
 
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     private fun createAdapter(): ProductListAdapter {
