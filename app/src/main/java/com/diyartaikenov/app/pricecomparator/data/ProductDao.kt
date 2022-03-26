@@ -11,10 +11,12 @@ interface ProductDao {
     @Query("select * from products")
     fun getProducts(): Flow<List<Product>>
 
-    @Query("select * from products order by protein_price asc")
+    @Query("select * from products where protein_quantity > 0 " +
+            "order by protein_price asc")
     fun getProductsSortedByProteinPrice(): Flow<List<Product>>
 
-    @Query("select * from products order by total_protein_quantity desc")
+    @Query("select * from products where protein_quantity > 0 " +
+            "order by total_protein_quantity desc")
     fun getProductsSortedByTotalProteinQuantity(): Flow<List<Product>>
 
     @Query("select * from products where id = :id")
