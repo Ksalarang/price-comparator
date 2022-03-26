@@ -46,12 +46,10 @@ class ProductListFragment: Fragment() {
 
         adapter = createAdapter()
 
-        bind.apply {
-            fabAddProduct.setOnClickListener {
-                findNavController().navigate(
-                    ProductListFragmentDirections.actionNavProductsToNavAddProduct()
-                )
-            }
+        bind.fabAddProduct.setOnClickListener {
+            findNavController().navigate(
+                ProductListFragmentDirections.actionNavProductsToNavAddProduct()
+            )
         }
     }
 
@@ -71,7 +69,8 @@ class ProductListFragment: Fragment() {
         sortActionMenuItems = listOf(
             menu.findItem(R.id.sort_by_default),
             menu.findItem(R.id.sort_by_protein_price),
-            menu.findItem(R.id.sort_by_protein_quantity)
+            menu.findItem(R.id.sort_by_protein_quantity),
+            menu.findItem(R.id.sort_by_price)
         )
         val menuItemIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
         onOptionsItemSelected(sortActionMenuItems[menuItemIndex])
@@ -90,6 +89,10 @@ class ProductListFragment: Fragment() {
             R.id.sort_by_protein_quantity -> {
                 sortActionMenuItems[2].isChecked = true
                 viewModel.sortInOrder(SortOrder.BY_PROTEIN_QUANTITY)
+            }
+            R.id.sort_by_price -> {
+                sortActionMenuItems[3].isChecked = true
+                viewModel.sortInOrder(SortOrder.BY_PRICE)
             }
         }
 

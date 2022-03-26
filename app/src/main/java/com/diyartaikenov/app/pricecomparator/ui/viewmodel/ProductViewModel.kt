@@ -51,6 +51,8 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
             }
             SortOrder.BY_PROTEIN_QUANTITY ->
                 productDao.getProductsSortedByTotalProteinQuantity().asLiveData()
+            SortOrder.BY_PRICE ->
+                productDao.getProductsSortedByPrice().asLiveData()
         }
     }
 }

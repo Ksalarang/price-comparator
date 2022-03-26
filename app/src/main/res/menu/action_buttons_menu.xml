@@ -15,6 +15,9 @@
 
                 <item android:id="@+id/sort_by_protein_quantity"
                     android:title="@string/menu_action_sort_by_protein_quantity" />
+
+                <item android:id="@+id/sort_by_price"
+                    android:title="@string/menu_action_sort_by_price" />
             </group>
         </menu>
     </item>
@@ -23,6 +26,7 @@
         android:title="@string/menu_action_filter_by"
         app:showAsAction="never">
         <menu>
+
         </menu>
     </item>
 </menu>
