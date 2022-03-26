@@ -50,7 +50,7 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
                 productDao.getProductsSortedByProteinPrice().asLiveData()
             }
             SortOrder.BY_PROTEIN_QUANTITY ->
-                productDao.getProductsSortedByProteinQuantity().asLiveData()
+                productDao.getProductsSortedByTotalProteinQuantity().asLiveData()
         }
     }
 }
