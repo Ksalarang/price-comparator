@@ -2,18 +2,20 @@ package com.diyartaikenov.app.pricecomparator.ui
 
 import android.os.Bundle
 import android.view.*
+import androidx.constraintlayout.widget.Group
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 
 import com.diyartaikenov.app.pricecomparator.BaseApplication
+import com.diyartaikenov.app.pricecomparator.MainActivity
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
 import com.diyartaikenov.app.pricecomparator.utils.SortOrder
-import com.diyartaikenov.app.pricecomparator.utils.log
 
 class ProductListFragment: Fragment() {
 
@@ -27,6 +29,11 @@ class ProductListFragment: Fragment() {
     private val bind get() = _bind!!
 
     private lateinit var adapter: ProductListAdapter
+
+    // Options menu sort action items
+    private lateinit var sortByDefaultMenuItem: MenuItem
+    private lateinit var sortByProteinPriceMenuItem: MenuItem
+    private lateinit var sortByProteinQuantityMenuItem: MenuItem
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,33 +71,35 @@ class ProductListFragment: Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_buttons_menu, menu)
+
+        sortByDefaultMenuItem = menu.findItem(R.id.sort_by_default)
+        sortByProteinPriceMenuItem = menu.findItem(R.id.sort_by_protein_price)
+        sortByProteinQuantityMenuItem = menu.findItem(R.id.sort_by_protein_quantity)
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by_default -> {
+                sortByDefaultMenuItem.isChecked = true
                 viewModel.sortInOrder(SortOrder.DEFAULT)
-                viewModel.products.observe(viewLifecycleOwner) { products ->
-                    adapter.submitList(products)
-                }
-                bind.recyclerView.adapter = adapter
             }
             R.id.sort_by_protein_price -> {
+                sortByProteinPriceMenuItem.isChecked = true
                 viewModel.sortInOrder(SortOrder.BY_PROTEIN_PRICE)
-                viewModel.products.observe(viewLifecycleOwner) { products ->
-                    adapter.submitList(products)
-                }
-                bind.recyclerView.adapter = adapter
             }
             R.id.sort_by_protein_quantity -> {
+                sortByProteinQuantityMenuItem.isChecked = true
                 viewModel.sortInOrder(SortOrder.BY_PROTEIN_QUANTITY)
-                viewModel.products.observe(viewLifecycleOwner) { products ->
-                    adapter.submitList(products)
-                }
-                bind.recyclerView.adapter = adapter
             }
         }
+
+        //
+        viewModel.products.observe(viewLifecycleOwner) { products ->
+            adapter.submitList(products)
+        }
+        bind.recyclerView.adapter = adapter
 
         return super.onOptionsItemSelected(item)
     }

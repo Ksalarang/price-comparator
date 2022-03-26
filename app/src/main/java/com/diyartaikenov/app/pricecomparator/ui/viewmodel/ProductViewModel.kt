@@ -9,7 +9,8 @@ import kotlinx.coroutines.launch
 
 class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
-    private var sortOrder = SortOrder.DEFAULT
+    var sortOrder = SortOrder.DEFAULT
+        private set
 
     var products: LiveData<List<Product>> = getProductsSorted()
         private set

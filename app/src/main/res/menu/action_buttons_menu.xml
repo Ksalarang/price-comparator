@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/sort_by_default"
-        android:title="@string/action_sort_by_default"
-        app:showAsAction="never" />
-    <item android:id="@+id/sort_by_protein_price"
-        android:title="@string/action_sort_by_protein_price"
-        app:showAsAction="never" />
-    <item android:id="@+id/sort_by_protein_quantity"
-        android:title="@string/action_sort_by_protein_quantity"
-        app:showAsAction="never" />
+
+    <item android:id="@+id/sort_by"
+        android:title="@string/menu_action_sort_by"
+        app:showAsAction="never">
+        <menu>
+            <group android:id="@+id/group_sort" android:checkableBehavior="single">
+                <item android:id="@+id/sort_by_default"
+                    android:title="@string/menu_action_sort_by_default" />
+
+                <item android:id="@+id/sort_by_protein_price"
+                    android:title="@string/menu_action_sort_by_protein_price" />
+
+                <item android:id="@+id/sort_by_protein_quantity"
+                    android:title="@string/menu_action_sort_by_protein_quantity" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:id="@+id/menu_action_filter_by"
+        android:title="@string/menu_action_filter_by"
+        app:showAsAction="never">
+        <menu>
+        </menu>
+    </item>
 </menu>
