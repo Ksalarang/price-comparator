@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.R
@@ -66,6 +67,9 @@ class ProductListFragment: Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_buttons_menu, menu)
 
+        // The ordinal of the SortOrders matches the index of the sortActionMenuItems items.
+        // Storing preferences this way works as long as menuItems stored in sortActionMenuItems
+        // arranged in the same order as the instances of the SortOrder enum.
         sortActionMenuItems = listOf(
             menu.findItem(R.id.sort_by_default),
             menu.findItem(R.id.sort_by_protein_price),
@@ -98,7 +102,11 @@ class ProductListFragment: Fragment() {
 
         // Observe changes and apply them to the recyclerView adapter
         viewModel.products.observe(viewLifecycleOwner) { products ->
-            adapter.submitList(products)
+            adapter.submitList(products) {
+                // Scroll to the top on rearranging list items
+                (bind.recyclerView.layoutManager as LinearLayoutManager)
+                    .scrollToPositionWithOffset(0, 0)
+            }
         }
         bind.recyclerView.adapter = adapter
 
