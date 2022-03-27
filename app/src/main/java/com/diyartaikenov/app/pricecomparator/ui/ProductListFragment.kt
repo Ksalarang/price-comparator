@@ -82,6 +82,9 @@ class ProductListFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.sort_by -> {
+                return true // do nothing
+            }
             R.id.sort_by_default -> {
                 sortActionMenuItems[0].isChecked = true
                 viewModel.sortInOrder(SortOrder.DEFAULT)
@@ -97,6 +100,9 @@ class ProductListFragment: Fragment() {
             R.id.sort_by_price -> {
                 sortActionMenuItems[3].isChecked = true
                 viewModel.sortInOrder(SortOrder.BY_PRICE)
+            }
+            R.id.menu_action_add_random_products -> {
+                viewModel.addRandomProducts(10)
             }
         }
 

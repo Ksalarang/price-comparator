@@ -34,7 +34,7 @@
 
     <!-- Options menu -->
     <string name="menu_action_sort_by">Sort by</string>
-    <string name="menu_action_filter_by">Filter by</string>
+    <string name="menu_action_add_random_products">Add random products</string>
     <string name="menu_action_sort_by_default">Default</string>
     <string name="menu_action_sort_by_protein_price">Protein price</string>
     <string name="menu_action_sort_by_protein_quantity">Protein quantity</string>

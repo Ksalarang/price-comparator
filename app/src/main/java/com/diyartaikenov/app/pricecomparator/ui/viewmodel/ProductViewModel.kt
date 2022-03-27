@@ -3,9 +3,12 @@ package com.diyartaikenov.app.pricecomparator.ui.viewmodel
 import androidx.lifecycle.*
 
 import com.diyartaikenov.app.pricecomparator.data.ProductDao
+import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.utils.SortOrder
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
+import kotlin.random.Random
 
 class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
@@ -22,6 +25,41 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
     fun addProduct(product: Product) {
         viewModelScope.launch {
             productDao.insert(product)
+        }
+    }
+
+    fun addRandomProducts(amount: Int) {
+        val products = mutableListOf<Product>()
+
+        repeat(amount) {
+            val weight = Random.nextInt(50, 1000)
+            val price = Random.nextInt(100, 2000)
+            val proteinQuantity = Random.nextInt(0, 50)
+            val foodGroup = FoodGroup.values()[Random.nextInt(0, 4)]
+
+            val totalProteinQuantity = (proteinQuantity * (weight / 100.0)).roundToInt()
+            val relativePrice = (price / (weight / 100.0)).roundToInt()
+
+            val proteinPrice = if (totalProteinQuantity == 0) {
+                0.0
+            } else {
+                price / totalProteinQuantity.toDouble()
+            }
+
+            products.add(Product(
+                name = "Product $it",
+                weight = weight,
+                price = price,
+                proteinQuantity = proteinQuantity,
+                foodGroup = foodGroup,
+                totalProteinQuantity = totalProteinQuantity,
+                relativePrice = relativePrice,
+                proteinPrice = proteinPrice
+            ))
+        }
+
+        viewModelScope.launch {
+            productDao.insertAll(products)
         }
     }
 

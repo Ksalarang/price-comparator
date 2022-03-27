@@ -22,11 +22,8 @@
         </menu>
     </item>
 
-    <item android:id="@+id/menu_action_filter_by"
-        android:title="@string/menu_action_filter_by"
+    <item android:id="@+id/menu_action_add_random_products"
+        android:title="@string/menu_action_add_random_products"
         app:showAsAction="never">
-        <menu>
-
-        </menu>
     </item>
 </menu>
