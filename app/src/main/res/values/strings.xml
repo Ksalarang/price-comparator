@@ -39,8 +39,11 @@
     <string name="menu_action_sort_by_protein_price">Protein price</string>
     <string name="menu_action_sort_by_protein_quantity">Protein quantity</string>
     <string name="menu_action_sort_by_price">Product price</string>
+
+    <!-- Action mode -->
     <string name="action_mode_delete">Delete</string>
     <string name="action_mode_select_all">Select all</string>
+    <string name="action_mode_title">%d selected</string>
 
     <string-array name="food_groups">
         <item>Undefined</item>

@@ -1,8 +1,6 @@
-package com.diyartaikenov.app.pricecomparator.ui.itemselector
+package com.diyartaikenov.app.pricecomparator.ui.adapter
 
 import androidx.recyclerview.selection.ItemKeyProvider
-
-import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 
 class MyItemKeyProvider(
     private val adapter: ProductListAdapter

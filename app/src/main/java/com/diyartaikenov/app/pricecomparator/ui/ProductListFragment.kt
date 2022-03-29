@@ -16,8 +16,8 @@ import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
-import com.diyartaikenov.app.pricecomparator.ui.itemselector.MyItemDetailsLookup
-import com.diyartaikenov.app.pricecomparator.ui.itemselector.MyItemKeyProvider
+import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemDetailsLookup
+import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemKeyProvider
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
 import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
@@ -25,7 +25,7 @@ import com.diyartaikenov.app.pricecomparator.utils.SortOrder
 import com.diyartaikenov.app.pricecomparator.utils.getIntPreference
 import com.diyartaikenov.app.pricecomparator.utils.saveIntPreference
 
-class ProductListFragment: Fragment() {
+class ProductListFragment: Fragment(), ActionMode.Callback {
 
     private val viewModel: ProductViewModel by activityViewModels {
         ProductViewModelFactory(
@@ -165,52 +165,56 @@ class ProductListFragment: Fragment() {
         override fun onSelectionChanged() {
             super.onSelectionChanged()
 
-            if (tracker.hasSelection() && actionMode == null) {
+            if (actionMode == null) {
                 actionMode = (activity as AppCompatActivity)
-                    .startSupportActionMode(actionModeCallback())
-                actionMode?.title = tracker.selection.size().toString()
-            } else if (!tracker.hasSelection()) {
-                actionMode?.finish()
+                    .startSupportActionMode(this@ProductListFragment)
+            }
+
+            val itemNumber = tracker.selection.size()
+            if (itemNumber > 0) {
+                actionMode?.title = getString(R.string.action_mode_title, itemNumber)
             } else {
-                actionMode?.title = tracker.selection.size().toString()
+                actionMode?.finish()
             }
         }
     }
 
-    private fun actionModeCallback() = object: ActionMode.Callback {
-        // Called after startActionMode
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            // Inflate a menu resource providing context menu items
-            mode.menuInflater.inflate(R.menu.menu_action_mode, menu)
-            return true
-        }
+    // region ActionMode callback
 
-        // Called each time the action mode is shown
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu) = false
+    // Called after startActionMode
+    override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+        // Inflate a menu resource providing context menu items
+        mode.menuInflater.inflate(R.menu.menu_action_mode, menu)
+        return true
+    }
 
-        // Called when the action mode is finished
-        override fun onDestroyActionMode(mode: ActionMode) {
-            actionMode = null
-            tracker.clearSelection()
-        }
+    // Called each time the action mode is shown
+    override fun onPrepareActionMode(mode: ActionMode, menu: Menu) = true
 
-        // Called when the user selects a contextual menu item
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.action_mode_select_all -> {
-                    adapter.currentList.forEach { product ->
-                        tracker.select(product.id)
-                    }
-                }
-                R.id.action_mode_delete -> {
-                    val selectedProducts = adapter.currentList.filter { product ->
-                        tracker.isSelected(product.id)
-                    }
-                    viewModel.deleteProducts(selectedProducts)
-                    actionMode?.finish()
+    // Called when the user selects a contextual menu item
+    override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_mode_select_all -> {
+                adapter.currentList.forEach { product ->
+                    tracker.select(product.id)
                 }
             }
-            return true
+            R.id.action_mode_delete -> {
+                val selectedProducts = adapter.currentList.filter { product ->
+                    tracker.isSelected(product.id)
+                }
+                viewModel.deleteProducts(selectedProducts)
+                actionMode?.finish()
+            }
         }
+        return true
     }
+
+    // Called when the action mode is finished
+    override fun onDestroyActionMode(mode: ActionMode) {
+        actionMode = null
+        tracker.clearSelection()
+    }
+
+    // endregion
 }

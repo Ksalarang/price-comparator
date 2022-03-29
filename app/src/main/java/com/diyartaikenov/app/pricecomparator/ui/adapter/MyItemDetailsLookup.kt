@@ -1,4 +1,4 @@
-package com.diyartaikenov.app.pricecomparator.ui.itemselector
+package com.diyartaikenov.app.pricecomparator.ui.adapter
 
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
