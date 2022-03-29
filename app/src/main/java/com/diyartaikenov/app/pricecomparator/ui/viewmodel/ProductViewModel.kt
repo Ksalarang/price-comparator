@@ -75,6 +75,12 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         }
     }
 
+    fun deleteProducts(products: List<Product>) {
+        viewModelScope.launch {
+            productDao.delete(products)
+        }
+    }
+
     fun sortInOrder(sortOrder: SortOrder) {
         this.sortOrder = sortOrder
         products = getProductsSorted()

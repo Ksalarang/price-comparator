@@ -2,12 +2,16 @@ package com.diyartaikenov.app.pricecomparator.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+
 import com.diyartaikenov.app.pricecomparator.R
 
 import com.diyartaikenov.app.pricecomparator.databinding.ProductItemLayoutBinding
@@ -19,6 +23,8 @@ class ProductListAdapter(
     private val deleteItemClickListener: (Product) -> Unit
 ): ListAdapter<Product, ProductListAdapter.ProductViewHolder>(DiffCallback) {
 
+    var tracker: SelectionTracker<Long>? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
@@ -29,8 +35,9 @@ class ProductListAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
+        val isSelected = tracker?.isSelected(product.id) ?: false
 
-        holder.bind(product) { view ->
+        holder.bind(product, isSelected) { view ->
             PopupMenu(context, view).apply {
                 inflate(R.menu.product_view_menu)
                 setOnMenuItemClickListener {
@@ -49,15 +56,28 @@ class ProductListAdapter(
                 show()
             }
         }
+        holder.setActivatedState(isSelected)
     }
 
-    class ProductViewHolder(private val binding: ProductItemLayoutBinding
+    override fun getItemId(position: Int) = getItem(position).id
+
+    inner class ProductViewHolder(private val binding: ProductItemLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: Product, menuButtonClickListener: View.OnClickListener) {
+        fun bind(product: Product,
+                 isActivated: Boolean,
+                 menuButtonClickListener: View.OnClickListener) {
+
             binding.apply {
                 this.product = product
                 buttonOptions.setOnClickListener(menuButtonClickListener)
+
+                if (isActivated) {
+                    buttonOptions.setImageResource(R.drawable.ic_checked_circle)
+                } else {
+                    buttonOptions.setImageResource(R.drawable.ic_options)
+                }
+
                 if (product.proteinQuantity > 0) {
                     setProteinViewsVisibility(View.VISIBLE)
                 } else {
@@ -65,6 +85,16 @@ class ProductListAdapter(
                 }
                 executePendingBindings()
             }
+        }
+
+        fun getItemDetails() = object : ItemDetailsLookup.ItemDetails<Long>() {
+            override fun getPosition(): Int = bindingAdapterPosition
+            override fun getSelectionKey(): Long = getItem(bindingAdapterPosition).id
+            override fun inSelectionHotspot(e: MotionEvent) = true
+        }
+
+        fun setActivatedState(isActivated: Boolean) {
+            itemView.isActivated = isActivated
         }
 
         private fun setProteinViewsVisibility(visibility: Int) {

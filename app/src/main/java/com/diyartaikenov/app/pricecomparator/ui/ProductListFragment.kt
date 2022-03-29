@@ -2,15 +2,22 @@ package com.diyartaikenov.app.pricecomparator.ui
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
+import com.diyartaikenov.app.pricecomparator.ui.itemselector.MyItemDetailsLookup
+import com.diyartaikenov.app.pricecomparator.ui.itemselector.MyItemKeyProvider
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
 import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
@@ -29,8 +36,11 @@ class ProductListFragment: Fragment() {
     private var _bind: FragmentProductListBinding? = null
     private val bind get() = _bind!!
 
+    private var actionMode: ActionMode? = null
+
     private lateinit var adapter: ProductListAdapter
     private lateinit var sortActionMenuItems: List<MenuItem>
+    private lateinit var tracker: SelectionTracker<Long>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,11 +56,16 @@ class ProductListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = createAdapter()
+        adapter.setHasStableIds(true)
+        bind.recyclerView.adapter = adapter
+
+        tracker = buildSelectionTracker()
+        adapter.tracker = tracker
+
+        tracker.addObserver(selectionObserver())
 
         bind.fabAddProduct.setOnClickListener {
-            findNavController().navigate(
-                ProductListFragmentDirections.actionNavProductsToNavAddProduct()
-            )
+            findNavController().navigate(R.id.action_nav_products_to_nav_add_product)
         }
     }
 
@@ -77,6 +92,7 @@ class ProductListFragment: Fragment() {
             menu.findItem(R.id.sort_by_price)
         )
         val menuItemIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
+        // Apply the stored sort order on app launch
         onOptionsItemSelected(sortActionMenuItems[menuItemIndex])
     }
 
@@ -114,7 +130,7 @@ class ProductListFragment: Fragment() {
                     .scrollToPositionWithOffset(0, 0)
             }
         }
-        bind.recyclerView.adapter = adapter
+        bind.recyclerView.adapter = adapter //fixme
 
         return true
     }
@@ -131,5 +147,70 @@ class ProductListFragment: Fragment() {
                 viewModel.deleteProduct(product)
             }
         )
+    }
+
+    private fun buildSelectionTracker(): SelectionTracker<Long> {
+        return SelectionTracker.Builder(
+            "mySelection",
+            bind.recyclerView,
+            MyItemKeyProvider(adapter),
+            MyItemDetailsLookup(bind.recyclerView),
+            StorageStrategy.createLongStorage()
+        )
+            .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+            .build()
+    }
+
+    private fun selectionObserver() = object : SelectionTracker.SelectionObserver<Long>() {
+        override fun onSelectionChanged() {
+            super.onSelectionChanged()
+
+            if (tracker.hasSelection() && actionMode == null) {
+                actionMode = (activity as AppCompatActivity)
+                    .startSupportActionMode(actionModeCallback())
+                actionMode?.title = tracker.selection.size().toString()
+            } else if (!tracker.hasSelection()) {
+                actionMode?.finish()
+            } else {
+                actionMode?.title = tracker.selection.size().toString()
+            }
+        }
+    }
+
+    private fun actionModeCallback() = object: ActionMode.Callback {
+        // Called after startActionMode
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            // Inflate a menu resource providing context menu items
+            mode.menuInflater.inflate(R.menu.menu_action_mode, menu)
+            return true
+        }
+
+        // Called each time the action mode is shown
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu) = false
+
+        // Called when the action mode is finished
+        override fun onDestroyActionMode(mode: ActionMode) {
+            actionMode = null
+            tracker.clearSelection()
+        }
+
+        // Called when the user selects a contextual menu item
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.action_mode_select_all -> {
+                    adapter.currentList.forEach { product ->
+                        tracker.select(product.id)
+                    }
+                }
+                R.id.action_mode_delete -> {
+                    val selectedProducts = adapter.currentList.filter { product ->
+                        tracker.isSelected(product.id)
+                    }
+                    viewModel.deleteProducts(selectedProducts)
+                    actionMode?.finish()
+                }
+            }
+            return true
+        }
     }
 }

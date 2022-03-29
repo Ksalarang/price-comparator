@@ -44,7 +44,7 @@
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/tab_indicator_text" />
+            app:tint="?attr/colorPrimary" />
 
         <!-- Second row -->
         <TextView

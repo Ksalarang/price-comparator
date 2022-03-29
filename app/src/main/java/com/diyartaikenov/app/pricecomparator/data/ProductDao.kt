@@ -36,4 +36,7 @@ interface ProductDao {
 
     @Delete
     suspend fun delete(product: Product)
+
+    @Delete
+    suspend fun delete(products: List<Product>)
 }

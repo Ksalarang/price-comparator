@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_mode_select_all"
+        android:title="@string/action_mode_select_all"
+        android:icon="@drawable/ic_select_all"
+        app:showAsAction="always"
+        app:iconTint="?attr/colorOnPrimary"
+        tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/action_mode_delete"
+        android:title="@string/action_mode_delete"
+        android:icon="@drawable/ic_delete"
+        app:iconTint="?attr/colorOnPrimary"
+        app:showAsAction="always" />
+</menu>
