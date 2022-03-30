@@ -56,7 +56,6 @@ class ProductListAdapter(
                 show()
             }
         }
-        holder.setActivatedState(isSelected)
     }
 
     override fun getItemId(position: Int) = getItem(position).id
@@ -83,6 +82,7 @@ class ProductListAdapter(
                 } else {
                     setProteinViewsVisibility(View.INVISIBLE)
                 }
+
                 executePendingBindings()
             }
         }
@@ -90,11 +90,6 @@ class ProductListAdapter(
         fun getItemDetails() = object : ItemDetailsLookup.ItemDetails<Long>() {
             override fun getPosition(): Int = bindingAdapterPosition
             override fun getSelectionKey(): Long = getItem(bindingAdapterPosition).id
-            override fun inSelectionHotspot(e: MotionEvent) = true
-        }
-
-        fun setActivatedState(isActivated: Boolean) {
-            itemView.isActivated = isActivated
         }
 
         private fun setProteinViewsVisibility(visibility: Int) {
