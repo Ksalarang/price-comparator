@@ -1,7 +1,9 @@
 package com.diyartaikenov.app.pricecomparator.ui
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
@@ -38,6 +40,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     private lateinit var adapter: ProductListAdapter
     private lateinit var sortActionMenuItems: List<MenuItem>
     private lateinit var tracker: SelectionTracker<Long>
+    private lateinit var alertDialogBuilder: AlertDialog.Builder
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,15 +55,15 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         adapter = createAdapter()
         adapter.setHasStableIds(true)
         bind.recyclerView.adapter = adapter
 
         tracker = buildSelectionTracker()
         adapter.tracker = tracker
-
         tracker.addObserver(selectionObserver())
+
+        alertDialogBuilder = buildAlertDialogBuilder()
 
         bind.fabAddProduct.setOnClickListener {
             findNavController().navigate(R.id.action_nav_products_to_nav_add_product)
@@ -191,19 +194,37 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         }
     }
 
+    private fun buildAlertDialogBuilder(): AlertDialog.Builder {
+
+        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    val selectedProducts = adapter.currentList.filter { product ->
+                        tracker.isSelected(product.id)
+                    }
+                    viewModel.deleteProducts(selectedProducts)
+                    actionMode?.finish()
+                }
+                DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss()
+            }
+        }
+
+        return AlertDialog.Builder(requireContext())
+            .setMessage(getString(R.string.question_delete_selected_products))
+            .setPositiveButton(getString(R.string.answer_ok), dialogClickListener)
+            .setNegativeButton(getString(R.string.answer_cancel), dialogClickListener)
+    }
+
     // region ActionMode callback
 
-    // Called after startActionMode
     override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
         // Inflate a menu resource providing context menu items
         mode.menuInflater.inflate(R.menu.menu_action_mode, menu)
         return true
     }
 
-    // Called each time the action mode is shown
     override fun onPrepareActionMode(mode: ActionMode, menu: Menu) = true
 
-    // Called when the user selects a contextual menu item
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_mode_select_all -> {
@@ -212,17 +233,12 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 }
             }
             R.id.action_mode_delete -> {
-                val selectedProducts = adapter.currentList.filter { product ->
-                    tracker.isSelected(product.id)
-                }
-                viewModel.deleteProducts(selectedProducts)
-                actionMode?.finish()
+                alertDialogBuilder.show()
             }
         }
         return true
     }
 
-    // Called when the action mode is finished
     override fun onDestroyActionMode(mode: ActionMode) {
         actionMode = null
         tracker.clearSelection()
