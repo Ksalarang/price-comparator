@@ -1,7 +1,6 @@
 package com.diyartaikenov.app.pricecomparator.ui.viewmodel
 
 import androidx.lifecycle.*
-
 import com.diyartaikenov.app.pricecomparator.data.ProductDao
 import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product

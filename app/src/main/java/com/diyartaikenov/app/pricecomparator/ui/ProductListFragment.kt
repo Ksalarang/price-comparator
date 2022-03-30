@@ -21,7 +21,6 @@ import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
 import com.diyartaikenov.app.pricecomparator.utils.*
-import kotlinx.coroutines.coroutineScope
 
 class ProductListFragment: Fragment(), ActionMode.Callback {
 

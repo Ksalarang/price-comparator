@@ -2,7 +2,6 @@ package com.diyartaikenov.app.pricecomparator.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-
 import com.diyartaikenov.app.pricecomparator.model.Product
 
 @Dao
