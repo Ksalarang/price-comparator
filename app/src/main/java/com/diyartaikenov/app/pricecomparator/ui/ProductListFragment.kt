@@ -12,6 +12,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.diyartaikenov.app.pricecomparator.BaseApplication
+import com.diyartaikenov.app.pricecomparator.MainActivity
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
 import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemDetailsLookup
@@ -54,6 +55,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         adapter = createAdapter()
         adapter.setHasStableIds(true)
         bind.recyclerView.adapter = adapter
@@ -66,6 +68,20 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         bind.fabAddProduct.setOnClickListener {
             findNavController().navigate(R.id.action_nav_products_to_nav_add_product)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        tracker.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        tracker.onRestoreInstanceState(savedInstanceState)
+        if (tracker.hasSelection()) {
+            actionMode = (activity as MainActivity).startSupportActionMode(this)
+            actionMode?.title = getString(R.string.action_mode_title, tracker.selection.size())
+        }
+        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onDestroyView() {
