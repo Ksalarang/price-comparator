@@ -20,10 +20,8 @@ import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemKeyProvider
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
-import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
-import com.diyartaikenov.app.pricecomparator.utils.SortOrder
-import com.diyartaikenov.app.pricecomparator.utils.getIntPreference
-import com.diyartaikenov.app.pricecomparator.utils.saveIntPreference
+import com.diyartaikenov.app.pricecomparator.utils.*
+import kotlinx.coroutines.coroutineScope
 
 class ProductListFragment: Fragment(), ActionMode.Callback {
 
@@ -114,7 +112,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by -> {
-                return true // do nothing
+                return true
             }
             R.id.sort_by_default -> {
                 sortActionMenuItems[0].isChecked = true
@@ -134,18 +132,18 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             }
             R.id.menu_action_add_random_products -> {
                 viewModel.addRandomProducts(10)
+                return true
             }
         }
 
-        // Observe changes and apply them to the recyclerView adapter
         viewModel.products.observe(viewLifecycleOwner) { products ->
             adapter.submitList(products) {
-                // Scroll to the top on rearranging list items
+                // Scroll to the top
+                // fixme: scroll the list only when sorting occurs
                 (bind.recyclerView.layoutManager as LinearLayoutManager)
                     .scrollToPositionWithOffset(0, 0)
             }
         }
-        bind.recyclerView.adapter = adapter //fixme
 
         return true
     }
