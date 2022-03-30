@@ -2,7 +2,6 @@ package com.diyartaikenov.app.pricecomparator.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -11,9 +10,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-
 import com.diyartaikenov.app.pricecomparator.R
-
 import com.diyartaikenov.app.pricecomparator.databinding.ProductItemLayoutBinding
 import com.diyartaikenov.app.pricecomparator.model.Product
 

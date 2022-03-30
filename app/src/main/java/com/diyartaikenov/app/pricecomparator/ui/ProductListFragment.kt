@@ -7,15 +7,16 @@ import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.selection.*
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentProductListBinding
-import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemDetailsLookup
 import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemKeyProvider
+import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
 import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
@@ -156,7 +157,6 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             StorageStrategy.createLongStorage()
         )
             .withSelectionPredicate(SelectionPredicates.createSelectAnything())
-            .withOnItemActivatedListener { _, _ -> true }
             .build()
     }
 

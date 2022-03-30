@@ -4,8 +4,6 @@ import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 
-import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
-
 class MyItemDetailsLookup(private val recyclerView: RecyclerView)
     : ItemDetailsLookup<Long>() {
 
