@@ -76,7 +76,7 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     fun deleteProducts(products: List<Product>) {
         viewModelScope.launch {
-            productDao.delete(products)
+            productDao.deleteAll(products)
         }
     }
 
