@@ -43,7 +43,7 @@
     <!-- Action mode -->
     <string name="action_mode_delete">Delete</string>
     <string name="action_mode_select_all">Select all</string>
-    <string name="action_mode_title">%d selected</string>
+    <string name="action_mode_title">%d</string>
     <string name="question_delete_selected_products">Delete selected items?</string>
     <string name="answer_ok">OK</string>
     <string name="answer_cancel">Cancel</string>

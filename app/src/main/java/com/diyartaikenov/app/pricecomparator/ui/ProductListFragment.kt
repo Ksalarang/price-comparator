@@ -66,6 +66,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         alertDialogBuilder = buildAlertDialogBuilder()
 
         bind.fabAddProduct.setOnClickListener {
+            actionMode?.finish()
             findNavController().navigate(R.id.action_nav_products_to_nav_add_product)
         }
     }
