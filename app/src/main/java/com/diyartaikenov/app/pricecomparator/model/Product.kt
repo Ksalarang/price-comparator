@@ -28,7 +28,7 @@ data class Product(
 enum class FoodGroup {
     UNDEFINED,
     ANIMAL_PRODUCTS,
-    DIARY,
+    DAIRY,
     FLAVOR_PRODUCTS,
     FRUIT_AND_VEGETABLES,
     GRAIN_PRODUCTS,
