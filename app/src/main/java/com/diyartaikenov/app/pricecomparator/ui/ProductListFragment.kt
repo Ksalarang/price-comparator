@@ -38,8 +38,10 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     private var actionMode: ActionMode? = null
 
     private lateinit var adapter: ProductListAdapter
-    private lateinit var sortActionMenuItems: List<MenuItem>
     private lateinit var tracker: SelectionTracker<Long>
+    private lateinit var sortActionMenuItems: List<MenuItem>
+
+    /** Alert dialog is showed on attempt of deleting selected products. */
     private lateinit var alertDialogBuilder: AlertDialog.Builder
 
     override fun onCreateView(
