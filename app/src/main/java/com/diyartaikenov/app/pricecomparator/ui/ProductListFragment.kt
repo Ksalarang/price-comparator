@@ -160,7 +160,17 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 )
             },
             { product -> // Remove the product
-                viewModel.deleteProduct(product)
+                val deleteProductListener = DialogInterface.OnClickListener { dialog, which ->
+                    when (which) {
+                        DialogInterface.BUTTON_POSITIVE -> viewModel.deleteProduct(product)
+                        DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss()
+                    }
+                }
+                AlertDialog.Builder(requireContext())
+                    .setMessage(getString(R.string.question_delete_product, product.name))
+                    .setPositiveButton(R.string.answer_ok, deleteProductListener)
+                    .setNegativeButton(R.string.answer_cancel, deleteProductListener)
+                    .show()
             }
         )
     }

@@ -44,7 +44,8 @@
     <string name="action_mode_delete">Delete</string>
     <string name="action_mode_select_all">Select all</string>
     <string name="action_mode_title">%d</string>
-    <string name="question_delete_selected_products">Delete selected items?</string>
+    <string name="question_delete_selected_products">Delete selected products?</string>
+    <string name="question_delete_product">Delete %s?</string>
     <string name="answer_ok">OK</string>
     <string name="answer_cancel">Cancel</string>
 
