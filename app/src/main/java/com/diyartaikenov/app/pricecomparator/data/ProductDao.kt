@@ -1,8 +1,8 @@
 package com.diyartaikenov.app.pricecomparator.data
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 import com.diyartaikenov.app.pricecomparator.model.Product
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
@@ -10,16 +10,12 @@ interface ProductDao {
     @Query("select * from products")
     fun getProducts(): Flow<List<Product>>
 
-    @Query("select * from products where protein_quantity > 0 " +
-            "order by protein_price asc")
-    fun getProductsSortedByProteinPrice(): Flow<List<Product>>
-
-    @Query("select * from products where protein_quantity > 0 " +
-            "order by total_protein_quantity desc")
-    fun getProductsSortedByTotalProteinQuantity(): Flow<List<Product>>
-
-    @Query("select * from products order by price asc")
-    fun getProductsSortedByPrice(): Flow<List<Product>>
+    @Query("select * from products order by " +
+            "case when :sortOrder = 0 then id end asc, " +
+            "case when :sortOrder = 1 then protein_price end asc, " +
+            "case when :sortOrder = 2 then protein_quantity end asc, " +
+            "case when :sortOrder = 3 then price end asc")
+    fun getProductsSortedBy(sortOrder: Int): Flow<List<Product>>
 
     @Query("select * from products where id = :id")
     fun getProduct(id: Long): Flow<Product>

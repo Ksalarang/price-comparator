@@ -22,7 +22,10 @@ import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemKeyProvider
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
-import com.diyartaikenov.app.pricecomparator.utils.*
+import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
+import com.diyartaikenov.app.pricecomparator.utils.SortOrder
+import com.diyartaikenov.app.pricecomparator.utils.getIntPreference
+import com.diyartaikenov.app.pricecomparator.utils.saveIntPreference
 
 class ProductListFragment: Fragment(), ActionMode.Callback {
 
@@ -121,19 +124,19 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             }
             R.id.sort_by_default -> {
                 sortActionMenuItems[0].isChecked = true
-                viewModel.sortInOrder(SortOrder.DEFAULT)
+                viewModel.updateWithParams(SortOrder.DEFAULT)
             }
             R.id.sort_by_protein_price -> {
                 sortActionMenuItems[1].isChecked = true
-                viewModel.sortInOrder(SortOrder.BY_PROTEIN_PRICE)
+                viewModel.updateWithParams(SortOrder.BY_PROTEIN_PRICE)
             }
             R.id.sort_by_protein_quantity -> {
                 sortActionMenuItems[2].isChecked = true
-                viewModel.sortInOrder(SortOrder.BY_PROTEIN_QUANTITY)
+                viewModel.updateWithParams(SortOrder.BY_PROTEIN_QUANTITY)
             }
             R.id.sort_by_price -> {
                 sortActionMenuItems[3].isChecked = true
-                viewModel.sortInOrder(SortOrder.BY_PRICE)
+                viewModel.updateWithParams(SortOrder.BY_PRICE)
             }
             R.id.menu_action_add_random_products -> {
                 viewModel.addRandomProducts(10)

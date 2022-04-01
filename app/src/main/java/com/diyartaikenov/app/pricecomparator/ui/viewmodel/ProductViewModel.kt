@@ -14,7 +14,8 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
     var sortOrder = SortOrder.DEFAULT
         private set
 
-    var products: LiveData<List<Product>> = getProductsSorted()
+    var products: LiveData<List<Product>> =
+        productDao.getProductsSortedBy(sortOrder.ordinal).asLiveData()
         private set
 
     fun getProductById(id: Long): LiveData<Product> {
@@ -80,23 +81,9 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         }
     }
 
-    fun sortInOrder(sortOrder: SortOrder) {
+    fun updateWithParams(sortOrder: SortOrder) {
         this.sortOrder = sortOrder
-        products = getProductsSorted()
-    }
-
-    private fun getProductsSorted(): LiveData<List<Product>> {
-        return when(sortOrder) {
-            SortOrder.DEFAULT ->
-                productDao.getProducts().asLiveData()
-            SortOrder.BY_PROTEIN_PRICE -> {
-                productDao.getProductsSortedByProteinPrice().asLiveData()
-            }
-            SortOrder.BY_PROTEIN_QUANTITY ->
-                productDao.getProductsSortedByTotalProteinQuantity().asLiveData()
-            SortOrder.BY_PRICE ->
-                productDao.getProductsSortedByPrice().asLiveData()
-        }
+        products = productDao.getProductsSortedBy(sortOrder.ordinal).asLiveData()
     }
 }
 
