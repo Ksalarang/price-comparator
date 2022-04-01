@@ -64,6 +64,15 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         adapter.setHasStableIds(true)
         bind.recyclerView.adapter = adapter
 
+        viewModel.products.observe(viewLifecycleOwner) { products ->
+            adapter.submitList(products) {
+                // Scroll to the top
+                // fixme: scroll the list only when sorting occurs
+                (bind.recyclerView.layoutManager as LinearLayoutManager)
+                    .scrollToPositionWithOffset(0, 0)
+            }
+        }
+
         tracker = buildSelectionTracker()
         adapter.tracker = tracker
         tracker.addObserver(selectionObserver())
@@ -141,15 +150,6 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             R.id.menu_action_add_random_products -> {
                 viewModel.addRandomProducts(10)
                 return true
-            }
-        }
-
-        viewModel.products.observe(viewLifecycleOwner) { products ->
-            adapter.submitList(products) {
-                // Scroll to the top
-                // fixme: scroll the list only when sorting occurs
-                (bind.recyclerView.layoutManager as LinearLayoutManager)
-                    .scrollToPositionWithOffset(0, 0)
             }
         }
 

@@ -5,6 +5,7 @@ import com.diyartaikenov.app.pricecomparator.data.ProductDao
 import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.utils.SortOrder
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -14,9 +15,8 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
     var sortOrder = SortOrder.DEFAULT
         private set
 
-    var products: LiveData<List<Product>> =
-        productDao.getProductsSortedBy(sortOrder.ordinal).asLiveData()
-        private set
+    private var _products: MutableLiveData<List<Product>> = MutableLiveData(listOf())
+    val products: LiveData<List<Product>> = _products
 
     fun getProductById(id: Long): LiveData<Product> {
         return productDao.getProduct(id).asLiveData()
@@ -83,7 +83,12 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     fun updateWithParams(sortOrder: SortOrder) {
         this.sortOrder = sortOrder
-        products = productDao.getProductsSortedBy(sortOrder.ordinal).asLiveData()
+
+        viewModelScope.launch {
+            productDao.getProductsSortedBy(sortOrder.ordinal).collect {
+                _products.value = it
+            }
+        }
     }
 }
 
