@@ -15,10 +15,10 @@ import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.MainActivity
 import com.diyartaikenov.app.pricecomparator.R
 import com.diyartaikenov.app.pricecomparator.databinding.FragmentAddProductBinding
-import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
+import com.diyartaikenov.app.pricecomparator.utils.FoodGroup
 import com.diyartaikenov.app.pricecomparator.utils.getIntValue
 import com.diyartaikenov.app.pricecomparator.utils.hideSoftInput
 import com.diyartaikenov.app.pricecomparator.utils.showSoftInput

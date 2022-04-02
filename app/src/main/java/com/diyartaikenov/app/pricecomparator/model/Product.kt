@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.diyartaikenov.app.pricecomparator.utils.FoodGroup
 
 @Entity(tableName = "products")
 @TypeConverters(FoodGroupConverter::class)
@@ -24,12 +25,3 @@ data class Product(
     @ColumnInfo(name = "protein_price")
     val proteinPrice: Double,
 )
-
-enum class FoodGroup {
-    UNDEFINED,
-    ANIMAL_PRODUCTS,
-    DAIRY,
-    FLAVOR_PRODUCTS,
-    FRUIT_AND_VEGETABLES,
-    GRAIN_PRODUCTS,
-}

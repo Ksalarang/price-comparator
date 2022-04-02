@@ -1,6 +1,7 @@
 package com.diyartaikenov.app.pricecomparator.model
 
 import androidx.room.TypeConverter
+import com.diyartaikenov.app.pricecomparator.utils.FoodGroup
 
 /**
  * Converter for a Room database to store [FoodGroup] enum as [String].

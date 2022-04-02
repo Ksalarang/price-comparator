@@ -31,5 +31,17 @@ fun log(message: String) {
 }
 
 enum class SortOrder {
-    DEFAULT, BY_PROTEIN_PRICE, BY_PROTEIN_QUANTITY, BY_PRICE,
+    DEFAULT,
+    BY_PROTEIN_PRICE,
+    BY_PROTEIN_QUANTITY,
+    BY_PRICE,
+}
+
+enum class FoodGroup {
+    UNDEFINED,
+    ANIMAL_PRODUCTS,
+    DAIRY,
+    FLAVOR_PRODUCTS,
+    FRUIT_AND_VEGETABLES,
+    GRAIN_PRODUCTS,
 }

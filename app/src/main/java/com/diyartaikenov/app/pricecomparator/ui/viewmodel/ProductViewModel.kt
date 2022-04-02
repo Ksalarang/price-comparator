@@ -2,8 +2,8 @@ package com.diyartaikenov.app.pricecomparator.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.diyartaikenov.app.pricecomparator.data.ProductDao
-import com.diyartaikenov.app.pricecomparator.model.FoodGroup
 import com.diyartaikenov.app.pricecomparator.model.Product
+import com.diyartaikenov.app.pricecomparator.utils.FoodGroup
 import com.diyartaikenov.app.pricecomparator.utils.SortOrder
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -13,6 +13,9 @@ import kotlin.random.Random
 class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     var sortOrder = SortOrder.DEFAULT
+        private set
+
+    var foodGroups = FoodGroup.values()
         private set
 
     private var _products: MutableLiveData<List<Product>> = MutableLiveData(listOf())
@@ -85,8 +88,9 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         this.sortOrder = sortOrder
 
         viewModelScope.launch {
-            productDao.getProductsSortedBy(sortOrder.ordinal).collect {
-                _products.value = it
+            productDao.getProductsSortedBy(sortOrder.ordinal, foodGroups)
+                .collect {
+                    _products.value = it
             }
         }
     }
