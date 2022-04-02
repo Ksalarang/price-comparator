@@ -10,11 +10,13 @@ interface ProductDao {
     @Query("select * from products")
     fun getProducts(): Flow<List<Product>>
 
-    @Query("select * from products order by " +
-            "case when :sortOrder = 0 then id end asc, " +
-            "case when :sortOrder = 1 then protein_price end asc, " +
-            "case when :sortOrder = 2 then protein_quantity end asc, " +
-            "case when :sortOrder = 3 then price end asc")
+    @Query("select * from products " +
+            "order by case " +
+            "when :sortOrder = 0 then id " +
+            "when :sortOrder = 1 then protein_price " +
+            "when :sortOrder = 2 then protein_quantity " +
+            "when :sortOrder = 3 then price " +
+            "end asc")
     fun getProductsSortedBy(sortOrder: Int): Flow<List<Product>>
 
     @Query("select * from products where id = :id")
