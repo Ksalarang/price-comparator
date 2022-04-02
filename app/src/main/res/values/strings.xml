@@ -34,11 +34,14 @@
 
     <!-- Options menu -->
     <string name="menu_action_sort_by">Sort by</string>
-    <string name="menu_action_add_random_products">Add random products</string>
     <string name="menu_action_sort_by_default">Default</string>
     <string name="menu_action_sort_by_protein_price">Protein price</string>
     <string name="menu_action_sort_by_protein_quantity">Protein quantity</string>
     <string name="menu_action_sort_by_price">Product price</string>
+    <string name="menu_action_add_random_products">Add random products</string>
+    <string name="menu_action_filter_by">Filter by</string>
+    <string name="menu_action_filter_by_food_group">Food group</string>
+    <string name="menu_action_filter_by_protein">Protein</string>
 
     <!-- Action mode -->
     <string name="action_mode_delete">Delete</string>
@@ -49,12 +52,21 @@
     <string name="answer_ok">OK</string>
     <string name="answer_cancel">Cancel</string>
 
+    <!-- Food groups -->
+    <string name="food_group_undefined">Undefined</string>
+    <string name="food_group_animal_products">Animal products</string>
+    <string name="food_group_dairy">Dairy</string>
+    <string name="food_group_flavor_products">Flavor products</string>
+    <string name="food_group_fruit_and_vegetables">Fruit and vegetables</string>
+    <string name="food_group_grain_products">Grain products</string>
+
+    <!-- This string array is needed for the Spinner's adapter -->
     <string-array name="food_groups">
-        <item>Undefined</item>
-        <item>Animal products</item>
-        <item>Dairy</item>
-        <item>Flavor products</item>
-        <item>Fruit and vegetables</item>
-        <item>Grain products</item>
+        <item>@string/food_group_undefined</item>
+        <item>@string/food_group_animal_products</item>
+        <item>@string/food_group_dairy</item>
+        <item>@string/food_group_flavor_products</item>
+        <item>@string/food_group_fruit_and_vegetables</item>
+        <item>@string/food_group_grain_products</item>
     </string-array>
 </resources>

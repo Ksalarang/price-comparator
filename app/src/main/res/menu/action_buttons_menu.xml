@@ -22,7 +22,36 @@
         </menu>
     </item>
 
-    <item android:id="@+id/menu_action_add_random_products"
+    <item android:id="@+id/filter_by"
+        android:title="@string/menu_action_filter_by"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/filter_by_food_group"
+                android:title="@string/menu_action_filter_by_food_group">
+                <menu>
+                    <group android:id="@+id/group_filter" android:checkableBehavior="all">
+                        <item android:id="@+id/filter_by_food_group_undefined"
+                            android:title="@string/food_group_undefined" />
+                        <item android:id="@+id/filter_by_food_group_animal_products"
+                            android:title="@string/food_group_animal_products" />
+                        <item android:id="@+id/filter_by_food_group_dairy"
+                            android:title="@string/food_group_dairy" />
+                        <item android:id="@+id/filter_by_food_group_flavor_products"
+                            android:title="@string/food_group_flavor_products" />
+                        <item android:id="@+id/filter_by_food_group_fruit_and_vegetables"
+                            android:title="@string/food_group_fruit_and_vegetables" />
+                        <item android:id="@+id/filter_by_food_group_grain_products"
+                            android:title="@string/food_group_grain_products" />
+                    </group>
+                </menu>
+            </item>
+
+            <item android:id="@+id/filter_by_protein"
+                android:title="@string/menu_action_filter_by_protein" />
+        </menu>
+    </item>
+
+    <item android:id="@+id/add_random_products"
         android:title="@string/menu_action_add_random_products"
         app:showAsAction="never">
     </item>

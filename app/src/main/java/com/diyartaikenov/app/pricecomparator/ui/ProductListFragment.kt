@@ -147,7 +147,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 sortActionMenuItems[3].isChecked = true
                 viewModel.updateProductsListWithParams(SortOrder.BY_PRICE)
             }
-            R.id.menu_action_add_random_products -> {
+            R.id.add_random_products -> {
                 viewModel.addRandomProducts(10)
                 return true
             }
