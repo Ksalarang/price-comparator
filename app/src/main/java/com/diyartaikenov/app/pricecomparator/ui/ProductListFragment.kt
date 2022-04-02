@@ -133,19 +133,19 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             }
             R.id.sort_by_default -> {
                 sortActionMenuItems[0].isChecked = true
-                viewModel.updateWithParams(SortOrder.DEFAULT)
+                viewModel.updateProductsListWithParams(SortOrder.DEFAULT)
             }
             R.id.sort_by_protein_price -> {
                 sortActionMenuItems[1].isChecked = true
-                viewModel.updateWithParams(SortOrder.BY_PROTEIN_PRICE)
+                viewModel.updateProductsListWithParams(SortOrder.BY_PROTEIN_PRICE)
             }
             R.id.sort_by_protein_quantity -> {
                 sortActionMenuItems[2].isChecked = true
-                viewModel.updateWithParams(SortOrder.BY_PROTEIN_QUANTITY)
+                viewModel.updateProductsListWithParams(SortOrder.BY_PROTEIN_QUANTITY)
             }
             R.id.sort_by_price -> {
                 sortActionMenuItems[3].isChecked = true
-                viewModel.updateWithParams(SortOrder.BY_PRICE)
+                viewModel.updateProductsListWithParams(SortOrder.BY_PRICE)
             }
             R.id.menu_action_add_random_products -> {
                 viewModel.addRandomProducts(10)

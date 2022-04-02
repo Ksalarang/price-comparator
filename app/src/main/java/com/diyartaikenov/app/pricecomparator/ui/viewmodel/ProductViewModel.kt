@@ -81,7 +81,7 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         }
     }
 
-    fun updateWithParams(sortOrder: SortOrder) {
+    fun updateProductsListWithParams(sortOrder: SortOrder) {
         this.sortOrder = sortOrder
 
         viewModelScope.launch {
