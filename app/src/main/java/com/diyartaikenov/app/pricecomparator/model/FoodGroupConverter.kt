@@ -3,23 +3,23 @@ package com.diyartaikenov.app.pricecomparator.model
 import androidx.room.TypeConverter
 
 /**
- * Converter for a Room database to store [FoodGroup] enums as integers.
+ * Converter for a Room database to store [FoodGroup] enum as [String].
  */
 class FoodGroupConverter {
 
     @TypeConverter
-    fun foodGroupToInt(foodGroup: FoodGroup): Int {
-        return foodGroup.ordinal
+    fun foodGroupToString(foodGroup: FoodGroup): String {
+        return foodGroup.name
     }
 
     @TypeConverter
-    fun intToFoodGroup(value: Int): FoodGroup {
+    fun stringToFoodGroup(value: String): FoodGroup {
         return when (value) {
-            FoodGroup.ANIMAL_PRODUCTS.ordinal -> FoodGroup.ANIMAL_PRODUCTS
-            FoodGroup.DAIRY.ordinal -> FoodGroup.DAIRY
-            FoodGroup.FLAVOR_PRODUCTS.ordinal -> FoodGroup.FLAVOR_PRODUCTS
-            FoodGroup.FRUIT_AND_VEGETABLES.ordinal -> FoodGroup.FRUIT_AND_VEGETABLES
-            FoodGroup.GRAIN_PRODUCTS.ordinal -> FoodGroup.GRAIN_PRODUCTS
+            FoodGroup.ANIMAL_PRODUCTS.name -> FoodGroup.ANIMAL_PRODUCTS
+            FoodGroup.DAIRY.name -> FoodGroup.DAIRY
+            FoodGroup.FLAVOR_PRODUCTS.name -> FoodGroup.FLAVOR_PRODUCTS
+            FoodGroup.FRUIT_AND_VEGETABLES.name -> FoodGroup.FRUIT_AND_VEGETABLES
+            FoodGroup.GRAIN_PRODUCTS.name -> FoodGroup.GRAIN_PRODUCTS
             else -> FoodGroup.UNDEFINED
         }
     }
