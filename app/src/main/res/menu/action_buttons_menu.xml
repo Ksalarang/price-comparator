@@ -4,7 +4,9 @@
 
     <item android:id="@+id/sort_by"
         android:title="@string/menu_action_sort_by"
-        app:showAsAction="never">
+        android:icon="@drawable/ic_sort"
+        app:iconTint="?attr/colorOnPrimary"
+        app:showAsAction="ifRoom">
         <menu>
             <group android:id="@+id/group_sort" android:checkableBehavior="single">
                 <item android:id="@+id/sort_by_default"
@@ -24,30 +26,17 @@
 
     <item android:id="@+id/filter_by"
         android:title="@string/menu_action_filter_by"
-        app:showAsAction="never">
+        android:icon="@drawable/ic_filter_menu"
+        app:iconTint="?attr/colorOnPrimary"
+        app:showAsAction="ifRoom">
         <menu>
             <item android:id="@+id/filter_by_food_group"
                 android:title="@string/menu_action_filter_by_food_group">
-                <menu>
-                    <group android:id="@+id/group_filter" android:checkableBehavior="all">
-                        <item android:id="@+id/filter_by_food_group_undefined"
-                            android:title="@string/food_group_undefined" />
-                        <item android:id="@+id/filter_by_food_group_animal_products"
-                            android:title="@string/food_group_animal_products" />
-                        <item android:id="@+id/filter_by_food_group_dairy"
-                            android:title="@string/food_group_dairy" />
-                        <item android:id="@+id/filter_by_food_group_flavor_products"
-                            android:title="@string/food_group_flavor_products" />
-                        <item android:id="@+id/filter_by_food_group_fruit_and_vegetables"
-                            android:title="@string/food_group_fruit_and_vegetables" />
-                        <item android:id="@+id/filter_by_food_group_grain_products"
-                            android:title="@string/food_group_grain_products" />
-                    </group>
-                </menu>
             </item>
 
             <item android:id="@+id/filter_by_protein"
-                android:title="@string/menu_action_filter_by_protein" />
+                android:title="@string/menu_action_filter_by_protein"
+                android:checkable="true" />
         </menu>
     </item>
 

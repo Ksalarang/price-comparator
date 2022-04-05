@@ -119,7 +119,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             menu.findItem(R.id.sort_by_default),
             menu.findItem(R.id.sort_by_protein_price),
             menu.findItem(R.id.sort_by_protein_quantity),
-            menu.findItem(R.id.sort_by_price)
+            menu.findItem(R.id.sort_by_price),
         )
         val menuItemIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
         // Apply the stored sort order on app launch
@@ -128,32 +128,37 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sort_by -> {
-                return true
-            }
             R.id.sort_by_default -> {
-                sortActionMenuItems[0].isChecked = true
+                item.isChecked = true
                 viewModel.updateProductsListWithParams(SortOrder.DEFAULT)
             }
             R.id.sort_by_protein_price -> {
-                sortActionMenuItems[1].isChecked = true
+                item.isChecked = true
                 viewModel.updateProductsListWithParams(SortOrder.BY_PROTEIN_PRICE)
             }
             R.id.sort_by_protein_quantity -> {
-                sortActionMenuItems[2].isChecked = true
+                item.isChecked = true
                 viewModel.updateProductsListWithParams(SortOrder.BY_PROTEIN_QUANTITY)
             }
             R.id.sort_by_price -> {
-                sortActionMenuItems[3].isChecked = true
+                item.isChecked = true
                 viewModel.updateProductsListWithParams(SortOrder.BY_PRICE)
             }
+
+            R.id.filter_by_food_group -> {
+                // todo: show a window of food group checkables
+            }
+            R.id.filter_by_protein -> {
+                item.isChecked = !item.isChecked
+                // todo: update the list
+            }
+
             R.id.add_random_products -> {
                 viewModel.addRandomProducts(10)
-                return true
             }
         }
 
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
     private fun createAdapter(): ProductListAdapter {
