@@ -84,13 +84,17 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         }
     }
 
-    fun updateProductsListWithParams(sortOrder: SortOrder) {
+    fun updateProductsListWithParams(
+        sortOrder: SortOrder = this.sortOrder,
+        foodGroups: Array<FoodGroup> = this.foodGroups
+    ) {
         this.sortOrder = sortOrder
+        this.foodGroups = foodGroups
 
         viewModelScope.launch {
             productDao.getProductsSortedBy(sortOrder.ordinal, foodGroups)
-                .collect {
-                    _products.value = it
+                .collect { products ->
+                    _products.value = products
             }
         }
     }

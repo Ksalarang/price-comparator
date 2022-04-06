@@ -1,6 +1,5 @@
 package com.diyartaikenov.app.pricecomparator.ui
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -22,10 +21,7 @@ import com.diyartaikenov.app.pricecomparator.ui.adapter.MyItemKeyProvider
 import com.diyartaikenov.app.pricecomparator.ui.adapter.ProductListAdapter
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
-import com.diyartaikenov.app.pricecomparator.utils.PREF_SORT_ORDER_ORDINAL
-import com.diyartaikenov.app.pricecomparator.utils.SortOrder
-import com.diyartaikenov.app.pricecomparator.utils.getIntPreference
-import com.diyartaikenov.app.pricecomparator.utils.saveIntPreference
+import com.diyartaikenov.app.pricecomparator.utils.*
 
 class ProductListFragment: Fragment(), ActionMode.Callback {
 
@@ -42,10 +38,9 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
 
     private lateinit var adapter: ProductListAdapter
     private lateinit var tracker: SelectionTracker<Long>
-    private lateinit var sortActionMenuItems: List<MenuItem>
 
     /** Alert dialog is showed on attempt of deleting selected products. */
-    private lateinit var alertDialogBuilder: AlertDialog.Builder
+    private lateinit var deleteSelectedProductsDialogBuilder: AlertDialog.Builder
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +72,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         adapter.tracker = tracker
         tracker.addObserver(selectionObserver())
 
-        alertDialogBuilder = buildAlertDialogBuilder()
+        deleteSelectedProductsDialogBuilder = buildAlertDialogBuilder()
 
         bind.fabAddProduct.setOnClickListener {
             actionMode?.finish()
@@ -115,7 +110,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         // The ordinal of the SortOrders matches the index of the sortActionMenuItems items.
         // Storing preferences this way works as long as menuItems stored in sortActionMenuItems
         // arranged in the same order as the instances of the SortOrder enum.
-        sortActionMenuItems = listOf(
+        val sortActionMenuItems = listOf(
             menu.findItem(R.id.sort_by_default),
             menu.findItem(R.id.sort_by_protein_price),
             menu.findItem(R.id.sort_by_protein_quantity),
@@ -145,8 +140,37 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 viewModel.updateProductsListWithParams(SortOrder.BY_PRICE)
             }
 
+            // Show a popup to apply filtering by food groups
             R.id.filter_by_food_group -> {
-                // todo: show a window of food group checkables
+                // todo: apply the previously saved array of food groups here
+                val selectedItems = BooleanArray(6) { false }
+
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Filter by food groups:")
+                    .setMultiChoiceItems(
+                        R.array.food_groups,
+                        null
+                    ) { _, which, isChecked ->
+                        selectedItems[which] = isChecked
+                    }
+                    .setPositiveButton(R.string.answer_apply) { _, _ ->
+                        val selectedFoodGroups = arrayListOf<FoodGroup>()
+                        val allFoodGroups = FoodGroup.values()
+
+                        for (i in selectedItems.indices) {
+                            if (selectedItems[i]) {
+                                selectedFoodGroups.add(allFoodGroups[i])
+                            }
+                        }
+
+                        viewModel.updateProductsListWithParams(
+                            foodGroups = selectedFoodGroups.toTypedArray()
+                        )
+                    }
+                    .setNegativeButton(R.string.answer_cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
             }
             R.id.filter_by_protein -> {
                 item.isChecked = !item.isChecked
@@ -164,22 +188,22 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     private fun createAdapter(): ProductListAdapter {
         return ProductListAdapter(
             requireContext(),
-            { product -> // Edit the product
+            // Edit the product
+            { product ->
                 findNavController().navigate(
                     ProductListFragmentDirections.actionNavProductsToNavAddProduct(product.id)
                 )
             },
-            { product -> // Remove the product
-                val deleteProductListener = DialogInterface.OnClickListener { dialog, which ->
-                    when (which) {
-                        DialogInterface.BUTTON_POSITIVE -> viewModel.deleteProduct(product)
-                        DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss()
-                    }
-                }
+            // Remove the product
+            { product ->
                 AlertDialog.Builder(requireContext())
                     .setMessage(getString(R.string.question_delete_product, product.name))
-                    .setPositiveButton(R.string.answer_ok, deleteProductListener)
-                    .setNegativeButton(R.string.answer_cancel, deleteProductListener)
+                    .setPositiveButton(R.string.answer_ok) { _, _ ->
+                        viewModel.deleteProduct(product)
+                    }
+                    .setNegativeButton(R.string.answer_cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
                     .show()
             }
         )
@@ -216,24 +240,16 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     }
 
     private fun buildAlertDialogBuilder(): AlertDialog.Builder {
-
-        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    val selectedProducts = adapter.currentList.filter { product ->
-                        tracker.isSelected(product.id)
-                    }
-                    viewModel.deleteProducts(selectedProducts)
-                    actionMode?.finish()
-                }
-                DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss()
-            }
-        }
-
         return AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.question_delete_selected_products))
-            .setPositiveButton(getString(R.string.answer_ok), dialogClickListener)
-            .setNegativeButton(getString(R.string.answer_cancel), dialogClickListener)
+            .setPositiveButton(getString(R.string.answer_ok)) { _, _ ->
+                val selectedProducts = adapter.currentList.filter { product ->
+                    tracker.isSelected(product.id)
+                }
+                viewModel.deleteProducts(selectedProducts)
+                actionMode?.finish()
+            }
+            .setNegativeButton(getString(R.string.answer_cancel)) { dialog, _ -> dialog.dismiss() }
     }
 
     // region ActionMode callback
@@ -254,7 +270,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 }
             }
             R.id.action_mode_delete -> {
-                alertDialogBuilder.show()
+                deleteSelectedProductsDialogBuilder.show()
             }
         }
         return true
