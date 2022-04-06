@@ -15,8 +15,23 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
     var sortOrder = SortOrder.DEFAULT
         private set
 
-    var foodGroups = FoodGroup.values()
+    var foodGroups: List<FoodGroup> = FoodGroup.values().asList()
         private set
+
+    /**
+     * Checks whether the [foodGroups] list contains all food groups
+     * and returns the result as a [BooleanArray]
+     */
+    fun foodGroupsAsBooleanArray(): BooleanArray {
+        val checkedFoodGroups = BooleanArray(FoodGroup.values().size)
+        val allFoodGroups = FoodGroup.values()
+
+        for (i in checkedFoodGroups.indices) {
+            checkedFoodGroups[i] = foodGroups.contains(allFoodGroups[i])
+        }
+
+        return checkedFoodGroups
+    }
 
     private var _products: MutableLiveData<List<Product>> = MutableLiveData(listOf())
     val products: LiveData<List<Product>> = _products
@@ -86,13 +101,13 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     fun updateProductsListWithParams(
         sortOrder: SortOrder = this.sortOrder,
-        foodGroups: Array<FoodGroup> = this.foodGroups
+        foodGroups: List<FoodGroup> = this.foodGroups
     ) {
         this.sortOrder = sortOrder
         this.foodGroups = foodGroups
 
         viewModelScope.launch {
-            productDao.getProductsSortedBy(sortOrder.ordinal, foodGroups)
+            productDao.getProductsSortedBy(sortOrder.ordinal, foodGroups.toTypedArray())
                 .collect { products ->
                     _products.value = products
             }

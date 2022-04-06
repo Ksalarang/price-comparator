@@ -140,18 +140,20 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 viewModel.updateProductsListWithParams(SortOrder.BY_PRICE)
             }
 
-            // Show a popup to apply filtering by food groups
+            // Build an alert dialog and show it to apply filtering by food groups
             R.id.filter_by_food_group -> {
-                // todo: apply the previously saved array of food groups here
-                val selectedItems = BooleanArray(6) { false }
+                val selectedItems = viewModel.foodGroupsAsBooleanArray()
 
                 AlertDialog.Builder(requireContext())
                     .setTitle("Filter by food groups:")
                     .setMultiChoiceItems(
                         R.array.food_groups,
-                        null
-                    ) { _, which, isChecked ->
+                        selectedItems
+                    )
+                    // On multi-choice click listener
+                    { _, which, isChecked ->
                         selectedItems[which] = isChecked
+                        // todo: disable button on all items unchecked
                     }
                     .setPositiveButton(R.string.answer_apply) { _, _ ->
                         val selectedFoodGroups = arrayListOf<FoodGroup>()
@@ -164,7 +166,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                         }
 
                         viewModel.updateProductsListWithParams(
-                            foodGroups = selectedFoodGroups.toTypedArray()
+                            foodGroups = selectedFoodGroups
                         )
                     }
                     .setNegativeButton(R.string.answer_cancel) { dialog, _ ->
