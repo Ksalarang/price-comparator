@@ -15,6 +15,18 @@ fun saveIntPreference(activity: Activity, key: String, value: Int) {
         .apply()
 }
 
+fun getBooleanPreference(activity: Activity, key: String, defaultValue: Boolean = false): Boolean {
+    return activity.getPreferences(AppCompatActivity.MODE_PRIVATE)
+        .getBoolean(key, defaultValue)
+}
+
+fun saveBooleanPreference(activity: Activity, key: String, value: Boolean) {
+    activity.getPreferences(AppCompatActivity.MODE_PRIVATE)
+        .edit()
+        .putBoolean(key, value)
+        .apply()
+}
+
 fun getFoodGroupsPreference(activity: Activity): List<FoodGroup> {
     val prefs = activity.getPreferences(AppCompatActivity.MODE_PRIVATE)
 
@@ -59,6 +71,7 @@ fun saveStringPreference(activity: Activity, key: String, value: String) {
 }
 
 const val PREF_SORT_ORDER_ORDINAL = "SORT_ORDER_ORDINAL"
+const val PREF_SHOW_ONLY_PRODUCTS_WITH_PROTEIN = "SHOW ONLY PRODUCTS WITH PROTEIN"
 
 private const val PREF_FOOD_GROUP = "FOOD_GROUP"
 private const val PREF_FOOD_GROUP_LIST_SIZE = "FOOD_GROUP_LIST_SIZE"

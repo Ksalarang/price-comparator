@@ -40,8 +40,8 @@
     <string name="menu_action_sort_by_price">Product price</string>
     <string name="menu_action_add_random_products">Add random products</string>
     <string name="menu_action_filter_by">Filter by</string>
-    <string name="menu_action_filter_by_food_group">Food group</string>
-    <string name="menu_action_filter_by_protein">Protein</string>
+    <string name="menu_action_filter_by_food_group">Food groups</string>
+    <string name="menu_action_filter_by_protein">Only with protein</string>
 
     <!-- Action mode -->
     <string name="action_mode_delete">Delete</string>
@@ -51,7 +51,8 @@
     <string name="question_delete_product">Delete %s?</string>
     <string name="answer_ok">OK</string>
     <string name="answer_cancel">Cancel</string>
-
+    <string name="answer_apply">Apply</string>
+    <string name="dialog_title_filter_by_food_group">Filter by food groups:</string>
     <!-- Food groups -->
     <string name="food_group_undefined">Undefined</string>
     <string name="food_group_animal_products">Animal products</string>
@@ -59,8 +60,6 @@
     <string name="food_group_flavor_products">Flavor products</string>
     <string name="food_group_fruit_and_vegetables">Fruit and vegetables</string>
     <string name="food_group_grain_products">Grain products</string>
-    <string name="answer_apply">Apply</string>
-    <string name="dialog_title_filter_by_food_group">Filter by food groups:</string>
 
     <!-- This string array is needed for the Spinner's adapter -->
     <string-array name="food_groups">

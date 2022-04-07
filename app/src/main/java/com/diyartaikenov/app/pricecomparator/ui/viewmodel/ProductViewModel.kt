@@ -13,9 +13,8 @@ import kotlin.random.Random
 class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     var sortOrder = SortOrder.DEFAULT
-        private set
-
     var foodGroups: List<FoodGroup> = FoodGroup.values().asList()
+    var showWithProteinOnly = false
 
     /**
      * Checks whether the [foodGroups] list contains all food groups
@@ -100,13 +99,19 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
 
     fun updateProductsListWithParams(
         sortOrder: SortOrder = this.sortOrder,
-        foodGroups: List<FoodGroup> = this.foodGroups
+        foodGroups: List<FoodGroup> = this.foodGroups,
+        showWithProteinOnly: Boolean = this.showWithProteinOnly
     ) {
         this.sortOrder = sortOrder
         this.foodGroups = foodGroups
+        this.showWithProteinOnly = showWithProteinOnly
 
         viewModelScope.launch {
-            productDao.getProductsSortedBy(sortOrder.ordinal, foodGroups.toTypedArray())
+            productDao.getProductsSortedBy(
+                sortOrder.ordinal,
+                foodGroups.toTypedArray(),
+                showWithProteinOnly
+            )
                 .collect { products ->
                     _products.value = products
             }

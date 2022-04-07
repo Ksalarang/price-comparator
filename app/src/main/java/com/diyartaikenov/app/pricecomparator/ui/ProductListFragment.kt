@@ -100,7 +100,16 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             PREF_SORT_ORDER_ORDINAL,
             viewModel.sortOrder.ordinal
         )
-        saveFoodGroupsPreference(requireActivity(), viewModel.foodGroups)
+        saveFoodGroupsPreference(
+            requireActivity(),
+            viewModel.foodGroups
+        )
+        saveBooleanPreference(
+            requireActivity(),
+            PREF_SHOW_ONLY_PRODUCTS_WITH_PROTEIN,
+            viewModel.showWithProteinOnly
+        )
+
         _bind = null
         super.onDestroyView()
     }
@@ -108,20 +117,31 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_buttons_menu, menu)
 
-        // The ordinal of the SortOrders matches the index of the sortActionMenuItems items.
-        // Storing preferences this way works as long as menuItems stored in sortActionMenuItems
-        // arranged in the same order as the instances of the SortOrder enum.
-        val sortActionMenuItems = listOf(
-            menu.findItem(R.id.sort_by_default),
-            menu.findItem(R.id.sort_by_protein_price),
-            menu.findItem(R.id.sort_by_protein_quantity),
-            menu.findItem(R.id.sort_by_price),
+        // The ordinal of the SortOrders matches the index of the sortActionMenuItems ids.
+        // Storing preferences this way works as long as
+        // menuItems' ids stored in sortActionMenuItems
+        // are arranged in the same order as the instances of the SortOrder enum.
+        val sortMenuItemsIds = listOf(
+            R.id.sort_by_default,
+            R.id.sort_by_protein_price,
+            R.id.sort_by_protein_quantity,
+            R.id.sort_by_price,
         )
-        val menuItemIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
 
-        viewModel.foodGroups = getFoodGroupsPreference(requireActivity())
-        // Apply the stored sort order on app launch
-        onOptionsItemSelected(sortActionMenuItems[menuItemIndex])
+        val menuItemIdIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
+        val foodGroups = getFoodGroupsPreference(requireActivity())
+        val showWithProteinOnly = getBooleanPreference(
+            requireActivity(),
+            PREF_SHOW_ONLY_PRODUCTS_WITH_PROTEIN
+        )
+        menu.findItem(sortMenuItemsIds[menuItemIdIndex]).isChecked = true
+        menu.findItem(R.id.filter_by_protein_presence).isChecked = showWithProteinOnly
+
+        viewModel.updateProductsListWithParams(
+            SortOrder.values()[menuItemIdIndex],
+            foodGroups,
+            showWithProteinOnly
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -177,9 +197,10 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                     }
                     .show()
             }
-            R.id.filter_by_protein -> {
+
+            R.id.filter_by_protein_presence -> {
                 item.isChecked = !item.isChecked
-                // todo: update the list
+                viewModel.updateProductsListWithParams(showWithProteinOnly = item.isChecked)
             }
 
             R.id.add_random_products -> {

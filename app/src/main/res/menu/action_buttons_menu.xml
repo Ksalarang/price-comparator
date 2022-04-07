@@ -34,7 +34,7 @@
                 android:title="@string/menu_action_filter_by_food_group">
             </item>
 
-            <item android:id="@+id/filter_by_protein"
+            <item android:id="@+id/filter_by_protein_presence"
                 android:title="@string/menu_action_filter_by_protein"
                 android:checkable="true" />
         </menu>

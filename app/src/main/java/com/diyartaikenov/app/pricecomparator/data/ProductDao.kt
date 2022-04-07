@@ -8,15 +8,22 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProductDao {
 
-    @Query(
-        "select * from products where food_group in (:foodGroupList)" +
+    @Query("select * from products " +
+            "where case " +
+            "when :showWithProteinOnly then protein_quantity > 0 and food_group in (:foodGroupList) " +
+            "else food_group in (:foodGroupList) " +
+            "end " +
             "order by case " +
             "when :sortOrder = 0 then id " +
             "when :sortOrder = 1 then protein_price " +
             "when :sortOrder = 2 then protein_quantity " +
             "when :sortOrder = 3 then price " +
-            "end asc")
-    fun getProductsSortedBy(sortOrder: Int, foodGroupList: Array<FoodGroup>): Flow<List<Product>>
+            "end asc ")
+    fun getProductsSortedBy(
+        sortOrder: Int,
+        foodGroupList: Array<FoodGroup>,
+        showWithProteinOnly: Boolean
+    ): Flow<List<Product>>
 
     @Query("select * from products where id = :id")
     fun getProduct(id: Long): Flow<Product>
