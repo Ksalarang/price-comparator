@@ -60,6 +60,7 @@
     <string name="food_group_fruit_and_vegetables">Fruit and vegetables</string>
     <string name="food_group_grain_products">Grain products</string>
     <string name="answer_apply">Apply</string>
+    <string name="dialog_title_filter_by_food_group">Filter by food groups:</string>
 
     <!-- This string array is needed for the Spinner's adapter -->
     <string-array name="food_groups">

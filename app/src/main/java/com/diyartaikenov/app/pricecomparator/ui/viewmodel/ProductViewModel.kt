@@ -16,7 +16,6 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         private set
 
     var foodGroups: List<FoodGroup> = FoodGroup.values().asList()
-        private set
 
     /**
      * Checks whether the [foodGroups] list contains all food groups

@@ -100,6 +100,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             PREF_SORT_ORDER_ORDINAL,
             viewModel.sortOrder.ordinal
         )
+        saveFoodGroupsPreference(requireActivity(), viewModel.foodGroups)
         _bind = null
         super.onDestroyView()
     }
@@ -117,6 +118,8 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
             menu.findItem(R.id.sort_by_price),
         )
         val menuItemIndex = getIntPreference(requireActivity(), PREF_SORT_ORDER_ORDINAL)
+
+        viewModel.foodGroups = getFoodGroupsPreference(requireActivity())
         // Apply the stored sort order on app launch
         onOptionsItemSelected(sortActionMenuItems[menuItemIndex])
     }
@@ -145,7 +148,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 val selectedItems = viewModel.foodGroupsAsBooleanArray()
 
                 AlertDialog.Builder(requireContext())
-                    .setTitle("Filter by food groups:")
+                    .setTitle(getString(R.string.dialog_title_filter_by_food_group))
                     .setMultiChoiceItems(
                         R.array.food_groups,
                         selectedItems

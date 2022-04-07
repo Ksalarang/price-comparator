@@ -15,6 +15,33 @@ fun saveIntPreference(activity: Activity, key: String, value: Int) {
         .apply()
 }
 
+fun getFoodGroupsPreference(activity: Activity): List<FoodGroup> {
+    val prefs = activity.getPreferences(AppCompatActivity.MODE_PRIVATE)
+
+    val foodGroups = mutableListOf<FoodGroup>()
+    val listSize = prefs.getInt(PREF_FOOD_GROUP_LIST_SIZE, 0)
+
+    return if (listSize > 0) {
+        for (i in 0 until listSize) {
+            val ordinal = prefs.getInt(PREF_FOOD_GROUP + "_$i", 0)
+            foodGroups.add(FoodGroup.values()[ordinal])
+        }
+
+        foodGroups
+    } else {
+        FoodGroup.values().asList()
+    }
+}
+
+fun saveFoodGroupsPreference(activity: Activity, foodGroups: List<FoodGroup>) {
+    val prefs = activity.getPreferences(AppCompatActivity.MODE_PRIVATE).edit()
+    for (i in foodGroups.indices) {
+        prefs.putInt(PREF_FOOD_GROUP + "_$i", foodGroups[i].ordinal)
+    }
+    prefs.putInt(PREF_FOOD_GROUP_LIST_SIZE, foodGroups.size)
+    prefs.apply()
+}
+
 fun getStringPreference(
     activity: Activity,
     key: String,
@@ -31,4 +58,7 @@ fun saveStringPreference(activity: Activity, key: String, value: String) {
         .apply()
 }
 
-const val PREF_SORT_ORDER_ORDINAL = "PREF_SORT_ORDER_ORDINAL"
+const val PREF_SORT_ORDER_ORDINAL = "SORT_ORDER_ORDINAL"
+
+private const val PREF_FOOD_GROUP = "FOOD_GROUP"
+private const val PREF_FOOD_GROUP_LIST_SIZE = "FOOD_GROUP_LIST_SIZE"
