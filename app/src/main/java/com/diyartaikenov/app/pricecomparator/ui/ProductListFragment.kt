@@ -168,7 +168,7 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
                 val selectedItems = viewModel.foodGroupsAsBooleanArray()
 
                 AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.dialog_title_filter_by_food_group))
+                    .setTitle(getString(R.string.dialog_filter_by_food_group))
                     .setMultiChoiceItems(
                         R.array.food_groups,
                         selectedItems

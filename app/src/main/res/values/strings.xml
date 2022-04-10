@@ -42,6 +42,7 @@
     <string name="menu_action_filter_by">Filter by</string>
     <string name="menu_action_filter_by_food_group">Food groups</string>
     <string name="menu_action_filter_by_protein">Only with protein</string>
+    <string name="dialog_filter_by_food_group">Filter by food groups:</string>
 
     <!-- Action mode -->
     <string name="action_mode_delete">Delete</string>
@@ -52,7 +53,7 @@
     <string name="answer_ok">OK</string>
     <string name="answer_cancel">Cancel</string>
     <string name="answer_apply">Apply</string>
-    <string name="dialog_title_filter_by_food_group">Filter by food groups:</string>
+
     <!-- Food groups -->
     <string name="food_group_undefined">Undefined</string>
     <string name="food_group_animal_products">Animal products</string>
