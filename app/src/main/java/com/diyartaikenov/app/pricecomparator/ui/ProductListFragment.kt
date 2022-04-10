@@ -60,11 +60,13 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         bind.recyclerView.adapter = adapter
 
         viewModel.products.observe(viewLifecycleOwner) { products ->
+            val oldSize = adapter.currentList.size
             adapter.submitList(products) {
-                // Scroll to the top
-                // fixme: scroll the list only when sorting occurs
-                (bind.recyclerView.layoutManager as LinearLayoutManager)
-                    .scrollToPositionWithOffset(0, 0)
+                // Scroll to the top of the list only when sorting occurs
+                if (oldSize == products.size) {
+                    (bind.recyclerView.layoutManager as LinearLayoutManager)
+                        .scrollToPositionWithOffset(0, 0)
+                }
             }
         }
 
