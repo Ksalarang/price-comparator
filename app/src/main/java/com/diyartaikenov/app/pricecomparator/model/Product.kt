@@ -15,11 +15,11 @@ data class Product(
     val weight: Int,
     val price: Int,
     @ColumnInfo(name = "protein_quantity")
-    val proteinQuantity: Int,
+    val proteinQuantity: Double,
     @ColumnInfo(name = "food_group")
     val foodGroup: FoodGroup,
     @ColumnInfo(name = "total_protein_quantity")
-    val totalProteinQuantity: Int,
+    val totalProteinQuantity: Double,
     @ColumnInfo(name = "relative_price")
     val relativePrice: Int,
     @ColumnInfo(name = "protein_price")

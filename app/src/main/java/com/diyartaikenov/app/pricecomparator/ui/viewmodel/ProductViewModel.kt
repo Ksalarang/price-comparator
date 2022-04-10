@@ -50,16 +50,16 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
         repeat(amount) {
             val weight = Random.nextInt(50, 1000)
             val price = Random.nextInt(100, 2000)
-            val proteinQuantity = Random.nextInt(0, 50)
+            val proteinQuantity = Random.nextDouble(0.0, 40.0)
             val foodGroup = FoodGroup.values()[Random.nextInt(0, 4)]
 
-            val totalProteinQuantity = (proteinQuantity * (weight / 100.0)).roundToInt()
+            val totalProteinQuantity = (proteinQuantity * (weight / 100.0))
             val relativePrice = (price / (weight / 100.0)).roundToInt()
 
-            val proteinPrice = if (totalProteinQuantity == 0) {
+            val proteinPrice = if (totalProteinQuantity == 0.0) {
                 0.0
             } else {
-                price / totalProteinQuantity.toDouble()
+                price / totalProteinQuantity
             }
 
             products.add(Product(

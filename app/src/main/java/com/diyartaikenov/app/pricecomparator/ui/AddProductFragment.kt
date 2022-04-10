@@ -18,10 +18,7 @@ import com.diyartaikenov.app.pricecomparator.databinding.FragmentAddProductBindi
 import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModel
 import com.diyartaikenov.app.pricecomparator.ui.viewmodel.ProductViewModelFactory
-import com.diyartaikenov.app.pricecomparator.utils.FoodGroup
-import com.diyartaikenov.app.pricecomparator.utils.getIntValue
-import com.diyartaikenov.app.pricecomparator.utils.hideSoftInput
-import com.diyartaikenov.app.pricecomparator.utils.showSoftInput
+import com.diyartaikenov.app.pricecomparator.utils.*
 import kotlin.math.roundToInt
 
 class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
@@ -40,7 +37,7 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
     private val name get() = bind.nameInputEditText.text.toString()
     private val weight get() = bind.weightInputEditText.getIntValue()
     private val price get() = bind.priceInputEditText.getIntValue()
-    private val proteinQuantity get() = bind.proteinQuantityInputEditText.getIntValue()
+    private val proteinQuantity get() = bind.proteinQuantityInputEditText.getDoubleValue()
     private var foodGroup = FoodGroup.UNDEFINED
 
     override fun onCreateView(
@@ -123,23 +120,23 @@ class AddProductFragment: Fragment(), AdapterView.OnItemSelectedListener {
             nameInputEditText.setText(product.name)
             weightInputEditText.setText(product.weight.toString())
             priceInputEditText.setText(product.price.toString())
-            proteinQuantityInputEditText.setText(product.proteinQuantity.toString())
+            proteinQuantityInputEditText.setText(String.format("%.1f", product.proteinQuantity))
             foodGroupSpinner.setSelection(product.foodGroup.ordinal)
         }
     }
 
     /**
      * Create a [Product] instance from the input fields.
-     * Only call after validateFields() returns true.
+     * Only call after validateFields() returning true.
      */
     private fun buildProductInstance(): Product {
-        val totalProteinQuantity = (proteinQuantity * (weight / 100.0)).roundToInt()
+        val totalProteinQuantity = (proteinQuantity * (weight / 100.0))
         val relativePrice = (price / (weight / 100.0)).roundToInt()
 
-        val proteinPrice = if (totalProteinQuantity == 0) {
+        val proteinPrice = if (totalProteinQuantity == 0.0) {
             0.0
         } else {
-            price / totalProteinQuantity.toDouble()
+            price / totalProteinQuantity
         }
 
         return Product(

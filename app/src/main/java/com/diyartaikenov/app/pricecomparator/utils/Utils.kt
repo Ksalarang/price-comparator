@@ -26,6 +26,14 @@ fun EditText.getIntValue(): Int {
     }
 }
 
+fun EditText.getDoubleValue(): Double {
+    return try {
+        this.text.toString().toDouble()
+    } catch (e: NumberFormatException) {
+        0.0
+    }
+}
+
 fun log(message: String) {
     Log.d("mytag", message)
 }

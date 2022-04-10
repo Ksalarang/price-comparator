@@ -140,8 +140,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/proteinQuantityInputEditText"
             style="@style/AddProductFragment.NumberInputEditText"
-            android:text="@string/zero"
-            android:maxLength="2"
+            android:text="@string/zero_decimal"
+            android:inputType="numberDecimal"
+            android:maxLength="4"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>

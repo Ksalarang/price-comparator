@@ -5,7 +5,7 @@
     <string name="description_button_options">Options button</string>
     <string name="product_weight">Per %d g:</string>
     <string name="product_price">%d tg</string>
-    <string name="protein_quantity">%d g</string>
+    <string name="protein_quantity">%.1f g</string>
     <string name="weight_label_100g">Per 100 g:</string>
     <string name="label_protein_price_per_gram">Protein price/g:</string>
     <string name="protein_price_per_gram">%.2f tg</string>
@@ -23,6 +23,7 @@
     <string name="label_food_group">Food group:</string>
     <string name="description_button_save_product">Save product button</string>
     <string name="zero" translatable="false">0</string>
+    <string name="zero_decimal" translatable="false">0.0</string>
     <string name="menu_item_edit">Edit</string>
     <string name="menu_item_delete">Delete</string>
     <string name="hint_product_weight">Weight (g)</string>

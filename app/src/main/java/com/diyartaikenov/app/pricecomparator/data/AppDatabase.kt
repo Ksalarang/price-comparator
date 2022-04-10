@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.diyartaikenov.app.pricecomparator.model.Product
 
 @Database(
-    version = 4,
+    version = 5,
     entities = [Product::class],
 )
 abstract class AppDatabase: RoomDatabase() {
@@ -27,10 +27,47 @@ abstract class AppDatabase: RoomDatabase() {
                     AppDatabase::class.java,
                     "app_database"
                 )
+                    .addMigrations(MIGRATION_3_4)
+                    .addMigrations(MIGRATION_4_5)
                     .build()
 
                 INSTANCE = instance
                 return instance
+            }
+        }
+
+        private val MIGRATION_4_5 = object: Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "create table products_new (" +
+                            "id INTEGER NOT NULL, " +
+                            "name TEXT NOT NULL, " +
+                            "weight INTEGER NOT NULL, " +
+                            "price INTEGER NOT NULL, " +
+                            "protein_quantity REAL NOT NULL, " +
+                            "food_group TEXT NOT NULL, " +
+                            "total_protein_quantity REAL NOT NULL, " +
+                            "relative_price INTEGER NOT NULL, " +
+                            "protein_price REAL NOT NULL, " +
+                            "primary key(id))"
+                )
+                database.execSQL(
+                    "insert into products_new (id, name, weight, price, protein_quantity, " +
+                            "food_group, total_protein_quantity, relative_price, protein_price) " +
+                            "select id, name, weight, price, " +
+                            "cast(protein_quantity as REAL), " +
+                            "food_group, " +
+                            "cast(total_protein_quantity as REAL), " +
+                            "relative_price, " +
+                            "protein_price " +
+                            "from products"
+                )
+                database.execSQL(
+                    "drop table products"
+                )
+                database.execSQL(
+                    "alter table products_new rename to products"
+                )
             }
         }
 
