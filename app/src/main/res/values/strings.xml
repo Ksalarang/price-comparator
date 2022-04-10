@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Price<br/>Comparator</string>
+    <string name="app_name">Price Comparator</string>
 
     <!-- Product item layout -->
     <string name="description_button_options">Options button</string>
