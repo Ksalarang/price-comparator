@@ -28,27 +28,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Weight -->
-    <TextView
-        android:id="@+id/label_weight"
-        style="@style/AddProductFragment.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_weight"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameInputLayout"
-        tools:text="@string/label_weight" />
-    <EditText
-        android:id="@+id/weight"
-        style="@style/AddProductFragment.EditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:text="@string/zero"
-        android:inputType="number"
-        android:importantForAutofill="no"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameInputLayout" />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/weightInputLayout"
         style="@style/AddProductFragment.TextInputLayout"
@@ -67,27 +46,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Price -->
-    <TextView
-        android:id="@+id/label_price"
-        style="@style/AddProductFragment.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_price"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_weight"
-        tools:text="@string/label_price" />
-    <EditText
-        android:id="@+id/price"
-        style="@style/AddProductFragment.EditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zero"
-        android:visibility="invisible"
-        android:inputType="number"
-        android:importantForAutofill="no"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_weight" />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/priceInputLayout"
         style="@style/AddProductFragment.TextInputLayout"
@@ -106,28 +64,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Protein quantity -->
-    <TextView
-        android:id="@+id/label_protein_quantity"
-        style="@style/AddProductFragment.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_protein_quantity"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_price"
-        tools:text="@string/label_protein_quantity" />
-    <EditText
-        android:id="@+id/protein_quantity"
-        style="@style/AddProductFragment.EditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zero"
-        android:visibility="invisible"
-        android:inputType="number"
-        android:maxLength="2"
-        android:importantForAutofill="no"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_price" />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/proteinQuantityInputLayout"
         style="@style/AddProductFragment.TextInputLayout"
@@ -161,7 +97,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/proteinQuantityInputLayout"
         tools:text="@string/label_food_group" />
-
     <Spinner
         android:id="@+id/food_group_spinner"
         android:layout_width="wrap_content"
