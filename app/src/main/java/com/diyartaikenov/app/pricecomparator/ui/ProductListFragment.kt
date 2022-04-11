@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.diyartaikenov.app.pricecomparator.BaseApplication
 import com.diyartaikenov.app.pricecomparator.MainActivity
 import com.diyartaikenov.app.pricecomparator.R
@@ -62,10 +61,9 @@ class ProductListFragment: Fragment(), ActionMode.Callback {
         viewModel.products.observe(viewLifecycleOwner) { products ->
             val oldSize = adapter.currentList.size
             adapter.submitList(products) {
-                // Scroll to the top of the list only when sorting occurs
+                // Scroll to the top of the list when its size didn't change
                 if (oldSize == products.size) {
-                    (bind.recyclerView.layoutManager as LinearLayoutManager)
-                        .scrollToPositionWithOffset(0, 0)
+                    bind.recyclerView.smoothScrollToPosition(0)
                 }
             }
         }

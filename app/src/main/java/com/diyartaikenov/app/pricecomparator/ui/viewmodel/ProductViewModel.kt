@@ -5,7 +5,7 @@ import com.diyartaikenov.app.pricecomparator.data.ProductDao
 import com.diyartaikenov.app.pricecomparator.model.Product
 import com.diyartaikenov.app.pricecomparator.utils.FoodGroup
 import com.diyartaikenov.app.pricecomparator.utils.SortOrder
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -112,9 +112,9 @@ class ProductViewModel(private val productDao: ProductDao): ViewModel() {
                 foodGroups.toTypedArray(),
                 showWithProteinOnly
             )
-                .collect { products ->
+                .collectLatest { products ->
                     _products.value = products
-            }
+                }
         }
     }
 }
